@@ -104,13 +104,7 @@
         .cost-item { display: grid; grid-template-columns: 100px 1fr 80px 60px; align-items: center; gap: 12px; }
         .cost-label { font-size: 13px; color: #94a3b8; }
         .cost-bar { height: 24px; background: rgba(148,163,184,0.1); border-radius: 12px; overflow: hidden; }
-        .cost-fill {
-            height: 100%;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            padding-left: 12px;
-        }
+        .cost-fill { height: 100%; border-radius: 12px; display: flex; align-items: center; padding-left: 12px; }
         .cost-fill.commission { background: linear-gradient(90deg, #7c3aed, #a855f7); }
         .cost-fill.product { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
         .cost-fill.tariff { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
@@ -194,7 +188,7 @@
             .kpi-grid { grid-template-columns: repeat(2, 1fr); }
         }
         
-        .hidden { display: none; }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
@@ -203,26 +197,25 @@
             <h1>📊 抖音电商利润分析看板</h1>
             
             <div class="date-selector">
-                <button class="date-btn active" onclick="showDate('2026-04-01')">📅 4月1日</button>
-                <button class="date-btn" onclick="showDate('2026-04-02')">📅 4月2日</button>
-                <button class="date-btn" onclick="showDate('all')">📈 本月累计</button>
+                <button class="date-btn" id="btn-2026-04-1" onclick="showDate('2026-04-1')">📅 4月1日</button>
+                <button class="date-btn" id="btn-2026-04-2" onclick="showDate('2026-04-2')">📅 4月2日</button>
+                <button class="date-btn active" id="btn-all" onclick="showDate('all')">📈 本月累计</button>
             </div>
             
-            <div class="period-label" id="periodLabel">统计周期：2026年4月1日</div>
+            <div class="period-label" id="periodLabel">统计周期：2026年4月1日 - 4月2日（本月累计）</div>
         </div>
-        
-        <!-- 4月1日数据 -->
-        <div id="data-2026-04-01">
+
+        <div id="data-2026-04-1" class="">
             <div class="kpi-grid">
                 <div class="kpi-card gmv">
                     <div class="kpi-label">💰 GMV（含退款）</div>
-                    <div class="kpi-value gmv">¥50,806</div>
-                    <div class="kpi-sub">总订单 115 单</div>
+                    <div class="kpi-value gmv">¥42,338</div>
+                    <div class="kpi-sub">总订单 98 单</div>
                 </div>
                 <div class="kpi-card refund">
                     <div class="kpi-label">📉 退款金额</div>
-                    <div class="kpi-value refund">¥8,468</div>
-                    <div class="kpi-sub">退款率 14.8%</div>
+                    <div class="kpi-value refund">¥0</div>
+                    <div class="kpi-sub">退款率 0.0%</div>
                 </div>
                 <div class="kpi-card sales">
                     <div class="kpi-label">💎 净销售额</div>
@@ -236,24 +229,272 @@
                 </div>
                 <div class="kpi-card rate">
                     <div class="kpi-label">📈 有效订单占比</div>
-                    <div class="kpi-value rate">85.2%</div>
-                    <div class="kpi-sub">已关闭 17 单</div>
+                    <div class="kpi-value rate">100.0%</div>
+                    <div class="kpi-sub">已关闭 0 单</div>
                 </div>
+            </div>
+            
+            <div class="main-grid">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">💸 成本结构分析</div>
+                    </div>
+                    <div class="cost-list">
+                        <div class="cost-item">
+                            <div class="cost-label">达人佣金</div>
+                            <div class="cost-bar"><div class="cost-fill commission" style="width: 100%"></div></div>
+                            <div class="cost-value">¥19,971</div>
+                            <div class="cost-percent">47.2%</div>
+                        </div>
+                        <div class="cost-item">
+                            <div class="cost-label">商品成本</div>
+                            <div class="cost-bar"><div class="cost-fill product" style="width: 50.51825146462371%"></div></div>
+                            <div class="cost-value">¥10,089</div>
+                            <div class="cost-percent">23.8%</div>
+                        </div>
+                        <div class="cost-item">
+                            <div class="cost-label">关税</div>
+                            <div class="cost-bar"><div class="cost-fill tariff" style="width: 17.68063692353913%"></div></div>
+                            <div class="cost-value">¥3,531</div>
+                            <div class="cost-percent">8.3%</div>
+                        </div>
+                        <div class="cost-item">
+                            <div class="cost-label">平台扣点</div>
+                            <div class="cost-bar"><div class="cost-fill platform" style="width: 8.477292073506584%"></div></div>
+                            <div class="cost-value">¥1,693</div>
+                            <div class="cost-percent">4.0%</div>
+                        </div>
+                        <div class="cost-item">
+                            <div class="cost-label">快递费</div>
+                            <div class="cost-bar"><div class="cost-fill express" style="width: 5.888538380651945%"></div></div>
+                            <div class="cost-value">¥1,176</div>
+                            <div class="cost-percent">2.8%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">🏆 达人利润排行榜 TOP 10</div>
+                    </div>
+                    <table class="rank-table">
+                        <thead>
+                            <tr><th>排名</th><th>达人</th><th>订单</th><th>销售额</th><th>利润</th><th>利润率</th></tr>
+                        </thead>
+                        <tbody id="daren-table-2026-04-1">
+<tr>
+            <td><span class="rank-badge rank-1">1</span></td>
+            <td class="daren-name">卢博士(直播号)</td>
+            <td class="num">53</td>
+            <td class="num">¥20,175</td>
+            <td class="num"><strong>¥2,410</strong></td>
+            <td><span class="rate-badge rate-mid">11.9%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank-2">2</span></td>
+            <td class="daren-name">火火全网测鱼油</td>
+            <td class="num">17</td>
+            <td class="num">¥10,815</td>
+            <td class="num"><strong>¥1,147</strong></td>
+            <td><span class="rate-badge rate-mid">10.6%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank-3">3</span></td>
+            <td class="daren-name">火火全网测肝片</td>
+            <td class="num">4</td>
+            <td class="num">¥2,306</td>
+            <td class="num"><strong>¥265</strong></td>
+            <td><span class="rate-badge rate-mid">11.5%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">4</span></td>
+            <td class="daren-name">大萌博士</td>
+            <td class="num">3</td>
+            <td class="num">¥1,506</td>
+            <td class="num"><strong>¥151</strong></td>
+            <td><span class="rate-badge rate-low">10.0%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">5</span></td>
+            <td class="daren-name">大森测评</td>
+            <td class="num">2</td>
+            <td class="num">¥1,457</td>
+            <td class="num"><strong>¥199</strong></td>
+            <td><span class="rate-badge rate-mid">13.7%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">6</span></td>
+            <td class="daren-name">鱼油君话健康</td>
+            <td class="num">1</td>
+            <td class="num">¥799</td>
+            <td class="num"><strong>¥77</strong></td>
+            <td><span class="rate-badge rate-low">9.7%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">7</span></td>
+            <td class="daren-name">王德发质检员的小号</td>
+            <td class="num">2</td>
+            <td class="num">¥697</td>
+            <td class="num"><strong>¥61</strong></td>
+            <td><span class="rate-badge rate-low">8.9%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">8</span></td>
+            <td class="daren-name">钮祜禄·小小总</td>
+            <td class="num">2</td>
+            <td class="num">¥688</td>
+            <td class="num"><strong>¥139</strong></td>
+            <td><span class="rate-badge rate-high">20.2%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">9</span></td>
+            <td class="daren-name">弓老师</td>
+            <td class="num">3</td>
+            <td class="num">¥640</td>
+            <td class="num"><strong>¥71</strong></td>
+            <td><span class="rate-badge rate-mid">11.1%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">10</span></td>
+            <td class="daren-name">王德发质检员</td>
+            <td class="num">1</td>
+            <td class="num">¥378</td>
+            <td class="num"><strong>¥92</strong></td>
+            <td><span class="rate-badge rate-high">24.5%</span></td>
+        </tr>                    </tbody>
+                </table>
             </div>
         </div>
         
-        <!-- 4月2日数据 -->
-        <div id="data-2026-04-02" class="hidden">
+        <div class="main-grid">
+            <div class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">📦 商品利润排行榜 TOP 10</div>
+                </div>
+                <table class="rank-table">
+                    <thead>
+                        <tr><th>排名</th><th>商品</th><th>订单</th><th>销售额</th><th>成本</th><th>利润</th><th>利润率</th></tr>
+                    </thead>
+                    <tbody id="product-table-2026-04-1">
+<tr>
+            <td><span class="rank-badge rank-1">1</span></td>
+            <td class="product-name">HUJ25032001-3-H</td>
+            <td class="num">15</td>
+            <td class="num">¥11,285</td>
+            <td class="num">¥3,119</td>
+            <td class="num"><strong>¥1,057</strong></td>
+            <td><span class="rate-badge rate-low">9.4%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank-2">2</span></td>
+            <td class="product-name">HUJ24082804</td>
+            <td class="num">25</td>
+            <td class="num">¥4,975</td>
+            <td class="num">¥1,159</td>
+            <td class="num"><strong>¥577</strong></td>
+            <td><span class="rate-badge rate-mid">11.6%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank-3">3</span></td>
+            <td class="product-name">4合+混合鱼油</td>
+            <td class="num">5</td>
+            <td class="num">¥3,995</td>
+            <td class="num">¥955</td>
+            <td class="num"><strong>¥473</strong></td>
+            <td><span class="rate-badge rate-mid">11.9%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">4</span></td>
+            <td class="product-name">HUJ250905-3-HUJ</td>
+            <td class="num">7</td>
+            <td class="num">¥3,556</td>
+            <td class="num">¥963</td>
+            <td class="num"><strong>¥328</strong></td>
+            <td><span class="rate-badge rate-low">9.2%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">5</span></td>
+            <td class="product-name">HUJ20240802</td>
+            <td class="num">14</td>
+            <td class="num">¥2,655</td>
+            <td class="num">¥420</td>
+            <td class="num"><strong>¥638</strong></td>
+            <td><span class="rate-badge rate-high">24.1%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">6</span></td>
+            <td class="product-name">4合+混合鱼油*3+赠2瓶镁</td>
+            <td class="num">1</td>
+            <td class="num">¥2,397</td>
+            <td class="num">¥628</td>
+            <td class="num"><strong>¥252</strong></td>
+            <td><span class="rate-badge rate-mid">10.5%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">7</span></td>
+            <td class="product-name">HUJ24082804-6-H</td>
+            <td class="num">2</td>
+            <td class="num">¥2,298</td>
+            <td class="num">¥616</td>
+            <td class="num"><strong>¥231</strong></td>
+            <td><span class="rate-badge rate-mid">10.1%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">8</span></td>
+            <td class="product-name">HUJ20240730-6-H</td>
+            <td class="num">2</td>
+            <td class="num">¥1,898</td>
+            <td class="num">¥417</td>
+            <td class="num"><strong>¥265</strong></td>
+            <td><span class="rate-badge rate-mid">14.0%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">9</span></td>
+            <td class="product-name">HUJ20240730</td>
+            <td class="num">9</td>
+            <td class="num">¥1,701</td>
+            <td class="num">¥263</td>
+            <td class="num"><strong>¥323</strong></td>
+            <td><span class="rate-badge rate-mid">19.0%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">10</span></td>
+            <td class="product-name">HUJ25032001</td>
+            <td class="num">3</td>
+            <td class="num">¥1,319</td>
+            <td class="num">¥174</td>
+            <td class="num"><strong>¥833</strong></td>
+            <td><span class="rate-badge rate-high">63.2%</span></td>
+        </tr>                    </tbody>
+                </table>
+            </div>
+            
+            <div class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">💡 关键洞察</div>
+                </div>
+                <div class="insights-grid" style="grid-template-columns: 1fr;">
+                    <div class="insight-card good">
+                        <div class="insight-title">✅ 利润亮点</div>
+                        <ul class="insight-list">
+                            <li>利润率 <strong>13.88%</strong></li>
+                            <li>订单量 98 单</li>
+                            <li>销售额 ¥42,338</li>
+                        </ul>
+                    </div>
+                    <div class="insight-card warn">
+                        <div class="insight-title">⚠️ 需要关注</div>
+                        <ul class="insight-list">
+                            <li>退款率 <strong>0.0%</strong></li>
+                            <li>达人佣金占比最高</li>
+                            <li>部分商品利润率偏低</li>
+                        </ul>
+                    </div>
+                    <div class="insight-card info">
+                        <div class="insight-title">💼 优化建议</div>
+                        <ul class="insight-list">
+                            <li>加大高利润率商品推广</li>
+                            <li>优化低利润率商品</li>
+                            <li>降低退货率</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="data-2026-04-2" class="hidden">
             <div class="kpi-grid">
                 <div class="kpi-card gmv">
                     <div class="kpi-label">💰 GMV（含退款）</div>
-                    <div class="kpi-value gmv">¥111,832</div>
-                    <div class="kpi-sub">总订单 223 单</div>
+                    <div class="kpi-value gmv">¥94,825</div>
+                    <div class="kpi-sub">总订单 187 单</div>
                 </div>
                 <div class="kpi-card refund">
                     <div class="kpi-label">📉 退款金额</div>
-                    <div class="kpi-value refund">¥17,007</div>
-                    <div class="kpi-sub">退款率 15.2%</div>
+                    <div class="kpi-value refund">¥0</div>
+                    <div class="kpi-sub">退款率 0.0%</div>
                 </div>
                 <div class="kpi-card sales">
                     <div class="kpi-label">💎 净销售额</div>
@@ -267,24 +508,272 @@
                 </div>
                 <div class="kpi-card rate">
                     <div class="kpi-label">📈 有效订单占比</div>
-                    <div class="kpi-value rate">83.9%</div>
-                    <div class="kpi-sub">已关闭 36 单</div>
+                    <div class="kpi-value rate">100.0%</div>
+                    <div class="kpi-sub">已关闭 0 单</div>
                 </div>
+            </div>
+            
+            <div class="main-grid">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">💸 成本结构分析</div>
+                    </div>
+                    <div class="cost-list">
+                        <div class="cost-item">
+                            <div class="cost-label">达人佣金</div>
+                            <div class="cost-bar"><div class="cost-fill commission" style="width: 100%"></div></div>
+                            <div class="cost-value">¥44,825</div>
+                            <div class="cost-percent">47.3%</div>
+                        </div>
+                        <div class="cost-item">
+                            <div class="cost-label">商品成本</div>
+                            <div class="cost-bar"><div class="cost-fill product" style="width: 51.0808700501952%"></div></div>
+                            <div class="cost-value">¥22,897</div>
+                            <div class="cost-percent">24.1%</div>
+                        </div>
+                        <div class="cost-item">
+                            <div class="cost-label">关税</div>
+                            <div class="cost-bar"><div class="cost-fill tariff" style="width: 17.644171779141104%"></div></div>
+                            <div class="cost-value">¥7,909</div>
+                            <div class="cost-percent">8.3%</div>
+                        </div>
+                        <div class="cost-item">
+                            <div class="cost-label">平台扣点</div>
+                            <div class="cost-bar"><div class="cost-fill platform" style="width: 8.461795872838817%"></div></div>
+                            <div class="cost-value">¥3,793</div>
+                            <div class="cost-percent">4.0%</div>
+                        </div>
+                        <div class="cost-item">
+                            <div class="cost-label">快递费</div>
+                            <div class="cost-bar"><div class="cost-fill express" style="width: 5.006134969325153%"></div></div>
+                            <div class="cost-value">¥2,244</div>
+                            <div class="cost-percent">2.4%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">🏆 达人利润排行榜 TOP 10</div>
+                    </div>
+                    <table class="rank-table">
+                        <thead>
+                            <tr><th>排名</th><th>达人</th><th>订单</th><th>销售额</th><th>利润</th><th>利润率</th></tr>
+                        </thead>
+                        <tbody id="daren-table-2026-04-2">
+<tr>
+            <td><span class="rank-badge rank-1">1</span></td>
+            <td class="daren-name">卢博士(直播号)</td>
+            <td class="num">100</td>
+            <td class="num">¥46,011</td>
+            <td class="num"><strong>¥5,356</strong></td>
+            <td><span class="rate-badge rate-mid">11.6%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank-2">2</span></td>
+            <td class="daren-name">火火全网测鱼油</td>
+            <td class="num">33</td>
+            <td class="num">¥23,969</td>
+            <td class="num"><strong>¥2,400</strong></td>
+            <td><span class="rate-badge rate-low">10.0%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank-3">3</span></td>
+            <td class="daren-name">火火全网测肝片</td>
+            <td class="num">9</td>
+            <td class="num">¥6,331</td>
+            <td class="num"><strong>¥671</strong></td>
+            <td><span class="rate-badge rate-mid">10.6%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">4</span></td>
+            <td class="daren-name">王德发质检员</td>
+            <td class="num">11</td>
+            <td class="num">¥3,971</td>
+            <td class="num"><strong>¥528</strong></td>
+            <td><span class="rate-badge rate-mid">13.3%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">5</span></td>
+            <td class="daren-name">大萌博士</td>
+            <td class="num">7</td>
+            <td class="num">¥3,759</td>
+            <td class="num"><strong>¥437</strong></td>
+            <td><span class="rate-badge rate-mid">11.6%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">6</span></td>
+            <td class="daren-name">大森测评</td>
+            <td class="num">2</td>
+            <td class="num">¥1,457</td>
+            <td class="num"><strong>¥199</strong></td>
+            <td><span class="rate-badge rate-mid">13.7%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">7</span></td>
+            <td class="daren-name">钮祜禄·小小总</td>
+            <td class="num">4</td>
+            <td class="num">¥1,052</td>
+            <td class="num"><strong>¥232</strong></td>
+            <td><span class="rate-badge rate-high">22.1%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">8</span></td>
+            <td class="daren-name">鱼油君话健康</td>
+            <td class="num">1</td>
+            <td class="num">¥799</td>
+            <td class="num"><strong>¥77</strong></td>
+            <td><span class="rate-badge rate-low">9.7%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">9</span></td>
+            <td class="daren-name">王德发质检员的小号</td>
+            <td class="num">2</td>
+            <td class="num">¥697</td>
+            <td class="num"><strong>¥61</strong></td>
+            <td><span class="rate-badge rate-low">8.9%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">10</span></td>
+            <td class="daren-name">弓老师</td>
+            <td class="num">3</td>
+            <td class="num">¥640</td>
+            <td class="num"><strong>¥71</strong></td>
+            <td><span class="rate-badge rate-mid">11.1%</span></td>
+        </tr>                    </tbody>
+                </table>
             </div>
         </div>
         
-        <!-- 累计数据 -->
-        <div id="data-all" class="hidden">
+        <div class="main-grid">
+            <div class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">📦 商品利润排行榜 TOP 10</div>
+                </div>
+                <table class="rank-table">
+                    <thead>
+                        <tr><th>排名</th><th>商品</th><th>订单</th><th>销售额</th><th>成本</th><th>利润</th><th>利润率</th></tr>
+                    </thead>
+                    <tbody id="product-table-2026-04-2">
+<tr>
+            <td><span class="rank-badge rank-1">1</span></td>
+            <td class="product-name">HUJ25032001-3-H</td>
+            <td class="num">28</td>
+            <td class="num">¥21,072</td>
+            <td class="num">¥5,823</td>
+            <td class="num"><strong>¥1,946</strong></td>
+            <td><span class="rate-badge rate-low">9.2%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank-2">2</span></td>
+            <td class="product-name">4合+混合鱼油</td>
+            <td class="num">15</td>
+            <td class="num">¥11,985</td>
+            <td class="num">¥2,865</td>
+            <td class="num"><strong>¥1,498</strong></td>
+            <td><span class="rate-badge rate-mid">12.5%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank-3">3</span></td>
+            <td class="product-name">HUJ24082804</td>
+            <td class="num">42</td>
+            <td class="num">¥8,756</td>
+            <td class="num">¥1,947</td>
+            <td class="num"><strong>¥1,080</strong></td>
+            <td><span class="rate-badge rate-mid">12.3%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">4</span></td>
+            <td class="product-name">HUJ25032001-5-H</td>
+            <td class="num">7</td>
+            <td class="num">¥8,183</td>
+            <td class="num">¥2,268</td>
+            <td class="num"><strong>¥695</strong></td>
+            <td><span class="rate-badge rate-low">8.5%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">5</span></td>
+            <td class="product-name">HUJ250905-3-HUJ</td>
+            <td class="num">15</td>
+            <td class="num">¥7,620</td>
+            <td class="num">¥2,063</td>
+            <td class="num"><strong>¥697</strong></td>
+            <td><span class="rate-badge rate-low">9.2%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">6</span></td>
+            <td class="product-name">4合+混合鱼油*3+赠2瓶镁</td>
+            <td class="num">3</td>
+            <td class="num">¥7,191</td>
+            <td class="num">¥1,884</td>
+            <td class="num"><strong>¥757</strong></td>
+            <td><span class="rate-badge rate-mid">10.5%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">7</span></td>
+            <td class="product-name">HUJ24082804-6-H</td>
+            <td class="num">3</td>
+            <td class="num">¥3,447</td>
+            <td class="num">¥924</td>
+            <td class="num"><strong>¥339</strong></td>
+            <td><span class="rate-badge rate-low">9.9%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">8</span></td>
+            <td class="product-name">HUJ20240802</td>
+            <td class="num">18</td>
+            <td class="num">¥3,383</td>
+            <td class="num">¥540</td>
+            <td class="num"><strong>¥801</strong></td>
+            <td><span class="rate-badge rate-high">23.7%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">9</span></td>
+            <td class="product-name">HUJ20240802-6-H</td>
+            <td class="num">2</td>
+            <td class="num">¥3,062</td>
+            <td class="num">¥452</td>
+            <td class="num"><strong>¥1,758</strong></td>
+            <td><span class="rate-badge rate-high">57.4%</span></td>
+        </tr><tr>
+            <td><span class="rank-badge rank_other">10</span></td>
+            <td class="product-name">HUJ250905</td>
+            <td class="num">13</td>
+            <td class="num">¥2,646</td>
+            <td class="num">¥469</td>
+            <td class="num"><strong>¥477</strong></td>
+            <td><span class="rate-badge rate-mid">18.0%</span></td>
+        </tr>                    </tbody>
+                </table>
+            </div>
+            
+            <div class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">💡 关键洞察</div>
+                </div>
+                <div class="insights-grid" style="grid-template-columns: 1fr;">
+                    <div class="insight-card good">
+                        <div class="insight-title">✅ 利润亮点</div>
+                        <ul class="insight-list">
+                            <li>利润率 <strong>13.87%</strong></li>
+                            <li>订单量 187 单</li>
+                            <li>销售额 ¥94,825</li>
+                        </ul>
+                    </div>
+                    <div class="insight-card warn">
+                        <div class="insight-title">⚠️ 需要关注</div>
+                        <ul class="insight-list">
+                            <li>退款率 <strong>0.0%</strong></li>
+                            <li>达人佣金占比最高</li>
+                            <li>部分商品利润率偏低</li>
+                        </ul>
+                    </div>
+                    <div class="insight-card info">
+                        <div class="insight-title">💼 优化建议</div>
+                        <ul class="insight-list">
+                            <li>加大高利润率商品推广</li>
+                            <li>优化低利润率商品</li>
+                            <li>降低退货率</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="data-all">
             <div class="kpi-grid">
                 <div class="kpi-card gmv">
                     <div class="kpi-label">💰 GMV（含退款）</div>
-                    <div class="kpi-value gmv">¥162,638</div>
-                    <div class="kpi-sub">总订单 338 单</div>
+                    <div class="kpi-value gmv">¥137,163</div>
+                    <div class="kpi-sub">总订单 285 单</div>
                 </div>
                 <div class="kpi-card refund">
                     <div class="kpi-label">📉 退款金额</div>
-                    <div class="kpi-value refund">¥25,475</div>
-                    <div class="kpi-sub">退款率 15.7%</div>
+                    <div class="kpi-value refund">¥0</div>
+                    <div class="kpi-sub">退款率 0.0%</div>
                 </div>
                 <div class="kpi-card sales">
                     <div class="kpi-label">💎 净销售额</div>
@@ -298,131 +787,8 @@
                 </div>
                 <div class="kpi-card rate">
                     <div class="kpi-label">📈 有效订单占比</div>
-                    <div class="kpi-value rate">84.3%</div>
-                    <div class="kpi-sub">已关闭 53 单</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 成本结构（显示累计数据） -->
-        <div class="main-grid">
-            <div class="panel">
-                <div class="panel-header">
-                    <div class="panel-title">💸 成本结构分析</div>
-                </div>
-                <div class="cost-list">
-                    <div class="cost-item">
-                        <div class="cost-label">达人佣金</div>
-                        <div class="cost-bar"><div class="cost-fill commission" style="width: 100%"></div></div>
-                        <div class="cost-value">¥64,797</div>
-                        <div class="cost-percent">54.9%</div>
-                    </div>
-                    <div class="cost-item">
-                        <div class="cost-label">商品成本</div>
-                        <div class="cost-bar"><div class="cost-fill product" style="width: 51%"></div></div>
-                        <div class="cost-value">¥32,986</div>
-                        <div class="cost-percent">27.9%</div>
-                    </div>
-                    <div class="cost-item">
-                        <div class="cost-label">关税</div>
-                        <div class="cost-bar"><div class="cost-fill tariff" style="width: 18%"></div></div>
-                        <div class="cost-value">¥11,440</div>
-                        <div class="cost-percent">9.7%</div>
-                    </div>
-                    <div class="cost-item">
-                        <div class="cost-label">平台扣点</div>
-                        <div class="cost-bar"><div class="cost-fill platform" style="width: 8%"></div></div>
-                        <div class="cost-value">¥5,487</div>
-                        <div class="cost-percent">4.6%</div>
-                    </div>
-                    <div class="cost-item">
-                        <div class="cost-label">快递费</div>
-                        <div class="cost-bar"><div class="cost-fill express" style="width: 5%"></div></div>
-                        <div class="cost-value">¥3,420</div>
-                        <div class="cost-percent">2.9%</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="panel">
-                <div class="panel-header">
-                    <div class="panel-title">🏆 达人利润排行榜 TOP 10</div>
-                </div>
-                <table class="rank-table">
-                    <thead>
-                        <tr>
-                            <th>排名</th>
-                            <th>达人</th>
-                            <th>订单</th>
-                            <th>销售额</th>
-                            <th>利润</th>
-                            <th>利润率</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><span class="rank-badge rank-1">1</span></td><td class="daren-name">卢博士...</td><td class="num">133</td><td class="num">¥63,562</td><td class="num"><strong>¥7,876</strong></td><td><span class="rate-badge rate-mid">12.4%</span></td></tr>
-                        <tr><td><span class="rank-badge rank-2">2</span></td><td class="daren-name">火火全网测...</td><td class="num">89</td><td class="num">¥67,328</td><td class="num"><strong>¥7,432</strong></td><td><span class="rate-badge rate-low">11.0%</span></td></tr>
-                        <tr><td><span class="rank-badge rank-3">3</span></td><td class="daren-name">大萌博士</td><td class="num">62</td><td class="num">¥30,421</td><td class="num"><strong>¥4,892</strong></td><td><span class="rate-badge rate-mid">16.1%</span></td></tr>
-                        <tr><td><span class="rank-badge rank-other">4</span></td><td class="daren-name">钮祜禄·...</td><td class="num">18</td><td class="num">¥9,773</td><td class="num"><strong>¥2,421</strong></td><td><span class="rate-badge rate-high">24.8%</span></td></tr>
-                        <tr><td><span class="rank-badge rank-other">5</span></td><td class="daren-name">王德发质检员</td><td class="num">28</td><td class="num">¥12,343</td><td class="num"><strong>¥1,543</strong></td><td><span class="rate-badge rate-low">12.5%</span></td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        
-        <div class="main-grid">
-            <div class="panel">
-                <div class="panel-header">
-                    <div class="panel-title">📦 商品利润排行榜 TOP 10</div>
-                </div>
-                <table class="rank-table">
-                    <thead>
-                        <tr>
-                            <th>排名</th>
-                            <th>商品名称</th>
-                            <th>订单</th>
-                            <th>销售额</th>
-                            <th>利润</th>
-                            <th>利润率</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><span class="rank-badge rank-1">1</span></td><td><div class="product-name">【火火专属】HUJ97%高纯EPA深海鱼油...</div><div class="product-desc">HUJ25032001-3</div></td><td class="num">35</td><td class="num">¥29,255</td><td class="num"><strong>¥2,696</strong></td><td><span class="rate-badge rate-low">9.2%</span></td></tr>
-                        <tr><td><span class="rank-badge rank-2">2</span></td><td><div class="product-name">【达人】HUJ禾优健活性B族胶囊</div><div class="product-desc">HUJ20240802-6</div></td><td class="num">2</td><td class="num">¥3,062</td><td class="num"><strong>¥1,759</strong></td><td><span class="rate-badge rate-high">57.4%</span></td></tr>
-                        <tr><td><span class="rank-badge rank-3">3</span></td><td><div class="product-name">【大萌博士】HUJ禾优健成人基础补充剂</div><div class="product-desc">4合+混合鱼油</div></td><td class="num">18</td><td class="num">¥19,176</td><td class="num"><strong>¥2,257</strong></td><td><span class="rate-badge rate-mid">11.8%</span></td></tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="panel">
-                <div class="panel-header">
-                    <div class="panel-title">💡 关键洞察</div>
-                </div>
-                <div class="insights-grid" style="grid-template-columns: 1fr;">
-                    <div class="insight-card good">
-                        <div class="insight-title">✅ 利润亮点</div>
-                        <ul class="insight-list">
-                            <li>整体利润率稳定在 <strong>13.88%</strong></li>
-                            <li>4月2日订单量增长91%，销售额翻倍</li>
-                            <li>活性B族胶囊利润率高达57.4%</li>
-                        </ul>
-                    </div>
-                    <div class="insight-card warn">
-                        <div class="insight-title">⚠️ 需要关注</div>
-                        <ul class="insight-list">
-                            <li>退款率 <strong>15.7%</strong>，需关注商品质量</li>
-                            <li>达人佣金占比 <strong>54.9%</strong></li>
-                            <li>部分商品利润率低于10%</li>
-                        </ul>
-                    </div>
-                    <div class="insight-card info">
-                        <div class="insight-title">💼 优化建议</div>
-                        <ul class="insight-list">
-                            <li>加大高利润率商品推广</li>
-                            <li>优化低利润率商品的佣金结构</li>
-                            <li>降低退货率</li>
-                        </ul>
-                    </div>
+                    <div class="kpi-value rate">100.0%</div>
+                    <div class="kpi-sub">已关闭 0 单</div>
                 </div>
             </div>
         </div>
@@ -435,24 +801,27 @@
     <script>
         function showDate(date) {
             // 隐藏所有数据
-            document.getElementById('data-2026-04-01').classList.add('hidden');
-            document.getElementById('data-2026-04-02').classList.add('hidden');
+            document.getElementById('data-2026-04-1').classList.add('hidden');
+            document.getElementById('data-2026-04-2').classList.add('hidden');
             document.getElementById('data-all').classList.add('hidden');
             
             // 显示选中数据
             if (date === 'all') {
                 document.getElementById('data-all').classList.remove('hidden');
-                document.getElementById('periodLabel').textContent = '统计周期：2026年4月1日 - 4月2日（累计）';
+                document.getElementById('periodLabel').textContent = '统计周期：2026年4月1日 - 4月2日（本月累计）';
             } else {
                 document.getElementById('data-' + date).classList.remove('hidden');
-                document.getElementById('periodLabel').textContent = '统计周期：' + date.replace('2026-', '').replace('-', '月') + '日';
+                var day = date.replace('2026-04-', '');
+                document.getElementById('periodLabel').textContent = '统计周期：2026年4月' + day + '日';
             }
             
             // 更新按钮状态
-            document.querySelectorAll('.date-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
+            document.querySelectorAll('.date-btn').forEach(btn => btn.classList.remove('active'));
+            if (date === 'all') {
+                document.getElementById('btn-all').classList.add('active');
+            } else {
+                document.getElementById('btn-' + date).classList.add('active');
+            }
         }
     </script>
 </body>
