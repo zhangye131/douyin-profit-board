@@ -130,7 +130,7 @@
         .rate-mid { background: rgba(251,191,36,0.2); color: #fbbf24; }
         .rate-low { background: rgba(248,113,113,0.2); color: #f87171; }
         
-        .daren-name { font-weight: 500; color: #e2e8f0; }
+        .daren-name, .product-name { font-weight: 500; color: #e2e8f0; }
         .num { color: #94a3b8; font-variant-numeric: tabular-nums; }
         
         .insights-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -338,11 +338,103 @@
         <div class="main-grid">
             <div class="panel">
                 <div class="panel-header">
-                    <div class="panel-title">📈 达人利润贡献分布</div>
+                    <div class="panel-title">📦 商品利润排行榜 TOP 10</div>
                 </div>
-                <div class="chart-container" style="height: 300px;">
-                    <canvas id="profitChart"></canvas>
-                </div>
+                <table class="rank-table">
+                    <thead>
+                        <tr>
+                            <th>排名</th>
+                            <th>商品编码</th>
+                            <th>订单</th>
+                            <th>销售额</th>
+                            <th>成本</th>
+                            <th>利润</th>
+                            <th>利润率</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+    <td><span class="rank-badge rank-1">1</span></td>
+    <td class="product-name">HUJ25032001-3-H..</td>
+    <td class="num">28</td>
+    <td class="num">¥21,072</td>
+    <td class="num">¥5,823</td>
+    <td class="num"><strong>¥1,947</strong></td>
+    <td><span class="rate-badge rate-low">9.2%</span></td>
+</tr><tr>
+    <td><span class="rank-badge rank-2">2</span></td>
+    <td class="product-name">HUJ20240802-6-H..</td>
+    <td class="num">2</td>
+    <td class="num">¥3,062</td>
+    <td class="num">¥453</td>
+    <td class="num"><strong>¥1,759</strong></td>
+    <td><span class="rate-badge rate-high">57.4%</span></td>
+</tr><tr>
+    <td><span class="rank-badge rank-3">3</span></td>
+    <td class="product-name">4合+混合鱼油</td>
+    <td class="num">15</td>
+    <td class="num">¥11,985</td>
+    <td class="num">¥2,866</td>
+    <td class="num"><strong>¥1,499</strong></td>
+    <td><span class="rate-badge rate-mid">12.5%</span></td>
+</tr><tr>
+    <td><span class="rank-badge rank-other">4</span></td>
+    <td class="product-name">HUJ24082804</td>
+    <td class="num">42</td>
+    <td class="num">¥8,756</td>
+    <td class="num">¥1,947</td>
+    <td class="num"><strong>¥1,081</strong></td>
+    <td><span class="rate-badge rate-mid">12.3%</span></td>
+</tr><tr>
+    <td><span class="rank-badge rank-other">5</span></td>
+    <td class="product-name">HUJ25032001</td>
+    <td class="num">5</td>
+    <td class="num">¥1,917</td>
+    <td class="num">¥290</td>
+    <td class="num"><strong>¥916</strong></td>
+    <td><span class="rate-badge rate-high">47.8%</span></td>
+</tr><tr>
+    <td><span class="rank-badge rank-other">6</span></td>
+    <td class="product-name">HUJ20240802</td>
+    <td class="num">18</td>
+    <td class="num">¥3,383</td>
+    <td class="num">¥540</td>
+    <td class="num"><strong>¥802</strong></td>
+    <td><span class="rate-badge rate-high">23.7%</span></td>
+</tr><tr>
+    <td><span class="rank-badge rank-other">7</span></td>
+    <td class="product-name">4合+混合鱼油*3+赠2瓶镁</td>
+    <td class="num">3</td>
+    <td class="num">¥7,191</td>
+    <td class="num">¥1,885</td>
+    <td class="num"><strong>¥758</strong></td>
+    <td><span class="rate-badge rate-mid">10.5%</span></td>
+</tr><tr>
+    <td><span class="rank-badge rank-other">8</span></td>
+    <td class="product-name">HUJ250905-3-HUJ..</td>
+    <td class="num">15</td>
+    <td class="num">¥7,620</td>
+    <td class="num">¥2,064</td>
+    <td class="num"><strong>¥698</strong></td>
+    <td><span class="rate-badge rate-low">9.2%</span></td>
+</tr><tr>
+    <td><span class="rank-badge rank-other">9</span></td>
+    <td class="product-name">HUJ25032001-5-H..</td>
+    <td class="num">7</td>
+    <td class="num">¥8,183</td>
+    <td class="num">¥2,269</td>
+    <td class="num"><strong>¥695</strong></td>
+    <td><span class="rate-badge rate-low">8.5%</span></td>
+</tr><tr>
+    <td><span class="rank-badge rank-other">10</span></td>
+    <td class="product-name">HUJ20240730</td>
+    <td class="num">13</td>
+    <td class="num">¥2,457</td>
+    <td class="num">¥381</td>
+    <td class="num"><strong>¥496</strong></td>
+    <td><span class="rate-badge rate-high">20.2%</span></td>
+</tr>                    </tbody>
+                </table>
             </div>
             
             <div class="panel">
@@ -353,9 +445,9 @@
                     <div class="insight-card good">
                         <div class="insight-title">✅ 利润亮点</div>
                         <ul class="insight-list">
-                            <li>整体利润率 <strong>13.87%</strong>，表现良好</li>
-                            <li>订单量增长明显（223单 vs 昨日115单）</li>
-                            <li>销售额大幅提升（¥111,832 vs 昨日¥50,806）</li>
+                            <li>整体利润率稳定在 <strong>13.87%</strong></li>
+                            <li>订单量增长91%，销售额翻倍</li>
+                            <li>HUJ20240802-6 利润率高达57.4%</li>
                         </ul>
                     </div>
                     <div class="insight-card warn">
@@ -363,14 +455,14 @@
                         <ul class="insight-list">
                             <li>退款率 <strong>15.2%</strong>，需关注商品质量</li>
                             <li>达人佣金占比 <strong>54.9%</strong>，是成本优化重点</li>
-                            <li>部分达人利润率偏低</li>
+                            <li>部分商品利润率低于10%</li>
                         </ul>
                     </div>
                     <div class="insight-card info">
                         <div class="insight-title">💼 优化建议</div>
                         <ul class="insight-list">
-                            <li>加大无达人渠道（商品卡、橱窗）投放</li>
-                            <li>优化高佣金达人的选品策略</li>
+                            <li>加大高利润率商品推广</li>
+                            <li>优化低利润率商品的佣金结构</li>
                             <li>降低退货率，提升客户满意度</li>
                         </ul>
                     </div>
@@ -378,8 +470,28 @@
             </div>
         </div>
         
+        <div class="main-grid">
+            <div class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">📈 达人利润贡献分布</div>
+                </div>
+                <div class="chart-container" style="height: 300px;">
+                    <canvas id="profitChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">📦 商品利润分布</div>
+                </div>
+                <div class="chart-container" style="height: 300px;">
+                    <canvas id="productChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
         <div class="footer">
-            🦞 OpenClaw 智能利润分析 | 2026年04月03日 09:37 | 数据来源：抖音电商后台
+            🦞 OpenClaw 智能利润分析 | 2026年04月03日 09:43 | 数据来源：抖音电商后台
         </div>
     </div>
     
@@ -460,6 +572,65 @@
                 plugins: { legend: { display: false } },
                 scales: {
                     x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 11 } } },
+                    y: {
+                        grid: { color: 'rgba(148,163,184,0.1)' },
+                        ticks: { color: '#64748b', callback: v => '¥' + v.toLocaleString() }
+                    }
+                }
+            }
+        });
+        
+        const productCtx = document.getElementById('productChart').getContext('2d');
+        const productLabels = [];
+        const productProfits = [];
+        const productColors = [];
+        productLabels.push('HUJ25032');
+        productProfits.push(1947);
+        productColors.push('rgba(168,85,247,0.8)');
+        productLabels.push('HUJ20240');
+        productProfits.push(1759);
+        productColors.push('rgba(96,165,250,0.8)');
+        productLabels.push('4合+混合鱼油');
+        productProfits.push(1499);
+        productColors.push('rgba(52,211,153,0.8)');
+        productLabels.push('HUJ24082');
+        productProfits.push(1081);
+        productColors.push('rgba(251,191,36,0.8)');
+        productLabels.push('HUJ25032');
+        productProfits.push(916);
+        productColors.push('rgba(248,113,113,0.8)');
+        productLabels.push('HUJ20240');
+        productProfits.push(802);
+        productColors.push('rgba(99,102,241,0.8)');
+        productLabels.push('4合+混合鱼油*');
+        productProfits.push(758);
+        productColors.push('rgba(96,165,250,0.6)');
+        productLabels.push('HUJ25090');
+        productProfits.push(698);
+        productColors.push('rgba(52,211,153,0.6)');
+        productLabels.push('HUJ25032');
+        productProfits.push(695);
+        productColors.push('rgba(251,191,36,0.6)');
+        productLabels.push('HUJ20240');
+        productProfits.push(496);
+        productColors.push('rgba(16,185,129,0.8)');
+        new Chart(productCtx, {
+            type: 'bar',
+            data: {
+                labels: productLabels,
+                datasets: [{
+                    label: '利润 (¥)',
+                    data: productProfits,
+                    backgroundColor: productColors,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 10 } } },
                     y: {
                         grid: { color: 'rgba(148,163,184,0.1)' },
                         ticks: { color: '#64748b', callback: v => '¥' + v.toLocaleString() }
