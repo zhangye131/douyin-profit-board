@@ -7,80 +7,23 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
-            min-height: 100vh;
-            color: #e2e8f0;
-            padding: 24px;
-        }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); min-height: 100vh; color: #e2e8f0; padding: 24px; }
         .container { max-width: 1400px; margin: 0 auto; }
-        
         .header { text-align: center; margin-bottom: 24px; }
-        .header h1 {
-            font-size: 36px;
-            font-weight: 700;
-            background: linear-gradient(90deg, #60a5fa, #a78bfa, #f472b6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 12px;
-        }
-        
-        .date-selector {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-        }
-        .date-btn {
-            padding: 10px 24px;
-            border-radius: 8px;
-            border: 1px solid rgba(148,163,184,0.2);
-            background: rgba(30,41,59,0.8);
-            color: #94a3b8;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-        .date-btn:hover {
-            border-color: rgba(96,165,250,0.5);
-            color: #fff;
-        }
-        .date-btn.active {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            border-color: #6366f1;
-            color: #fff;
-        }
-        
-        .period-label {
-            text-align: center;
-            color: #94a3b8;
-            font-size: 14px;
-            margin-bottom: 20px;
-            padding: 8px 16px;
-            background: rgba(30,41,59,0.6);
-            border-radius: 20px;
-            display: inline-block;
-        }
-        
+        .header h1 { font-size: 36px; font-weight: 700; background: linear-gradient(90deg, #60a5fa, #a78bfa, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 12px; }
+        .date-selector { display: flex; justify-content: center; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+        .date-btn { padding: 10px 24px; border-radius: 8px; border: 1px solid rgba(148,163,184,0.2); background: rgba(30,41,59,0.8); color: #94a3b8; cursor: pointer; font-size: 14px; transition: all 0.3s; }
+        .date-btn:hover { border-color: rgba(96,165,250,0.5); color: #fff; }
+        .date-btn.active { background: linear-gradient(135deg, #6366f1, #8b5cf6); border-color: #6366f1; color: #fff; }
+        .period-label { text-align: center; color: #94a3b8; font-size: 14px; margin-bottom: 20px; padding: 8px 16px; background: rgba(30,41,59,0.6); border-radius: 20px; display: inline-block; }
         .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-bottom: 24px; }
-        .kpi-card {
-            background: linear-gradient(135deg, rgba(30,41,59,0.8), rgba(51,65,85,0.6));
-            border-radius: 16px;
-            padding: 20px;
-            border: 1px solid rgba(148,163,184,0.1);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s;
-        }
+        .kpi-card { background: linear-gradient(135deg, rgba(30,41,59,0.8), rgba(51,65,85,0.6)); border-radius: 16px; padding: 20px; border: 1px solid rgba(148,163,184,0.1); backdrop-filter: blur(10px); transition: all 0.3s; }
         .kpi-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
         .kpi-card.gmv { border-left: 4px solid #60a5fa; }
         .kpi-card.refund { border-left: 4px solid #f87171; }
         .kpi-card.sales { border-left: 4px solid #34d399; }
         .kpi-card.profit { border-left: 4px solid #fbbf24; }
         .kpi-card.rate { border-left: 4px solid #a78bfa; }
-        
         .kpi-label { font-size: 12px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
         .kpi-value { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 4px; }
         .kpi-value.gmv { color: #60a5fa; }
@@ -89,18 +32,11 @@
         .kpi-value.profit { color: #fbbf24; }
         .kpi-value.rate { color: #a78bfa; }
         .kpi-sub { font-size: 11px; color: #64748b; }
-        
         .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
-        .panel {
-            background: linear-gradient(135deg, rgba(30,41,59,0.8), rgba(51,65,85,0.6));
-            border-radius: 16px;
-            padding: 24px;
-            border: 1px solid rgba(148,163,184,0.1);
-        }
+        .panel { background: linear-gradient(135deg, rgba(30,41,59,0.8), rgba(51,65,85,0.6)); border-radius: 16px; padding: 24px; border: 1px solid rgba(148,163,184,0.1); }
         .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .panel-title { font-size: 16px; font-weight: 600; color: #fff; }
         .chart-container { position: relative; height: 300px; }
-        
         .cost-list { display: flex; flex-direction: column; gap: 16px; }
         .cost-item { display: grid; grid-template-columns: 100px 1fr 80px 60px; align-items: center; gap: 12px; }
         .cost-label { font-size: 13px; color: #94a3b8; }
@@ -113,82 +49,33 @@
         .cost-fill.express { background: linear-gradient(90deg, #6366f1, #818cf8); }
         .cost-value { font-size: 14px; font-weight: 600; text-align: right; }
         .cost-percent { font-size: 12px; color: #64748b; text-align: right; }
-        
         .rank-table { width: 100%; border-collapse: collapse; }
-        .rank-table th {
-            text-align: left;
-            padding: 12px 8px;
-            font-size: 11px;
-            color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 1px solid rgba(148,163,184,0.1);
-        }
+        .rank-table th { text-align: left; padding: 12px 8px; font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid rgba(148,163,184,0.1); }
         .rank-table td { padding: 14px 8px; font-size: 13px; border-bottom: 1px solid rgba(148,163,184,0.05); }
         .rank-table tr:hover { background: rgba(96,165,250,0.05); }
-        .rank-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 24px;
-            height: 24px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 700;
-        }
+        .rank-badge { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 6px; font-size: 11px; font-weight: 700; }
         .rank-1 { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #000; }
         .rank-2 { background: linear-gradient(135deg, #94a3b8, #64748b); color: #fff; }
         .rank-3 { background: linear-gradient(135deg, #cd7f32, #b87333); color: #fff; }
         .rank-other { background: rgba(148,163,184,0.2); color: #94a3b8; }
-        
-        .rate-badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: 600;
-        }
+        .rate-badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
         .rate-high { background: rgba(16,185,129,0.2); color: #34d399; }
         .rate-mid { background: rgba(251,191,36,0.2); color: #fbbf24; }
         .rate-low { background: rgba(248,113,113,0.2); color: #f87171; }
-        
         .daren-name, .product-name { font-weight: 500; color: #e2e8f0; }
         .product-desc { font-size: 11px; color: #94a3b8; margin-top: 2px; }
         .num { color: #94a3b8; font-variant-numeric: tabular-nums; }
-        
         .insights-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-        .insight-card {
-            background: rgba(30,41,59,0.6);
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid rgba(148,163,184,0.1);
-        }
+        .insight-card { background: rgba(30,41,59,0.6); border-radius: 12px; padding: 20px; border: 1px solid rgba(148,163,184,0.1); }
         .insight-card.good { border-top: 3px solid #34d399; }
         .insight-card.warn { border-top: 3px solid #fbbf24; }
         .insight-card.info { border-top: 3px solid #60a5fa; }
-        
         .insight-title { font-size: 14px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
         .insight-list { list-style: none; font-size: 12px; color: #94a3b8; line-height: 1.8; }
         .insight-list li::before { content: "•"; color: #64748b; margin-right: 8px; }
-        
-        .footer {
-            text-align: center;
-            margin-top: 24px;
-            padding-top: 16px;
-            border-top: 1px solid rgba(148,163,184,0.1);
-            color: #64748b;
-            font-size: 12px;
-        }
-        
-        @media (max-width: 1200px) {
-            .kpi-grid { grid-template-columns: repeat(3, 1fr); }
-            .main-grid { grid-template-columns: 1fr; }
-            .insights-grid { grid-template-columns: 1fr; }
-        }
-        @media (max-width: 768px) {
-            .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        
+        .footer { text-align: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(148,163,184,0.1); color: #64748b; font-size: 12px; }
+        @media (max-width: 1200px) { .kpi-grid { grid-template-columns: repeat(3, 1fr); } .main-grid { grid-template-columns: 1fr; } .insights-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
         .hidden { display: none !important; }
     </style>
 </head>
@@ -196,13 +83,11 @@
     <div class="container">
         <div class="header">
             <h1>📊 抖音电商利润分析看板</h1>
-            
             <div class="date-selector">
                 <button class="date-btn" id="btn-2026-04-1" onclick="showDate('2026-04-1')">📅 4月1日</button>
                 <button class="date-btn" id="btn-2026-04-2" onclick="showDate('2026-04-2')">📅 4月2日</button>
                 <button class="date-btn active" id="btn-all" onclick="showDate('all')">📈 本月累计</button>
             </div>
-            
             <div class="period-label" id="periodLabel">统计周期：2026年4月1日 - 4月2日（本月累计）</div>
         </div>
 
@@ -210,13 +95,13 @@
             <div class="kpi-grid">
                 <div class="kpi-card gmv">
                     <div class="kpi-label">💰 GMV（含退款）</div>
-                    <div class="kpi-value gmv">¥42,338</div>
-                    <div class="kpi-sub">总订单 98 单</div>
+                    <div class="kpi-value gmv">¥50,806</div>
+                    <div class="kpi-sub">总订单 115 单</div>
                 </div>
                 <div class="kpi-card refund">
                     <div class="kpi-label">📉 退款金额</div>
-                    <div class="kpi-value refund">¥0</div>
-                    <div class="kpi-sub">退款率 0.0%</div>
+                    <div class="kpi-value refund">¥8,468</div>
+                    <div class="kpi-sub">退款率 16.7%</div>
                 </div>
                 <div class="kpi-card sales">
                     <div class="kpi-label">💎 净销售额</div>
@@ -230,16 +115,14 @@
                 </div>
                 <div class="kpi-card rate">
                     <div class="kpi-label">📈 有效订单占比</div>
-                    <div class="kpi-value rate">100.0%</div>
-                    <div class="kpi-sub">已关闭 0 单</div>
+                    <div class="kpi-value rate">85.2%</div>
+                    <div class="kpi-sub">已关闭 17 单</div>
                 </div>
             </div>
             
             <div class="main-grid">
                 <div class="panel">
-                    <div class="panel-header">
-                        <div class="panel-title">💸 成本结构分析</div>
-                    </div>
+                    <div class="panel-header"><div class="panel-title">💸 成本结构分析</div></div>
                     <div class="cost-list">
                         <div class="cost-item">
                             <div class="cost-label">达人佣金</div>
@@ -275,190 +158,49 @@
                 </div>
                 
                 <div class="panel">
-                    <div class="panel-header">
-                        <div class="panel-title">🥧 达人成交占比</div>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="pie-2026-04-1"></canvas>
-                    </div>
+                    <div class="panel-header"><div class="panel-title">🥧 达人成交占比</div></div>
+                    <div class="chart-container"><canvas id="pie-2026-04-1"></canvas></div>
                 </div>
             </div>
             
             <div class="main-grid">
                 <div class="panel">
-                    <div class="panel-header">
-                        <div class="panel-title">🏆 达人利润排行榜 TOP 10</div>
-                    </div>
+                    <div class="panel-header"><div class="panel-title">🏆 达人利润排行榜 TOP 10</div></div>
                     <table class="rank-table">
-                        <thead>
-                            <tr><th>排名</th><th>达人</th><th>订单</th><th>销售额</th><th>利润</th><th>利润率</th></tr>
-                        </thead>
+                        <thead><tr><th>排名</th><th>达人</th><th>订单</th><th>销售额</th><th>利润</th><th>利润率</th></tr></thead>
                         <tbody>
-<tr>
-            <td><span class="rank-badge rank-1">1</span></td>
-            <td class="daren-name">卢博士(直播号)</td>
-            <td class="num">53</td>
-            <td class="num">¥20,175</td>
-            <td class="num"><strong>¥2,410</strong></td>
-            <td><span class="rate-badge rate-mid">11.9%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank-2">2</span></td>
-            <td class="daren-name">火火全网测鱼油</td>
-            <td class="num">17</td>
-            <td class="num">¥10,815</td>
-            <td class="num"><strong>¥1,147</strong></td>
-            <td><span class="rate-badge rate-mid">10.6%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank-3">3</span></td>
-            <td class="daren-name">火火全网测肝片</td>
-            <td class="num">4</td>
-            <td class="num">¥2,306</td>
-            <td class="num"><strong>¥265</strong></td>
-            <td><span class="rate-badge rate-mid">11.5%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">4</span></td>
-            <td class="daren-name">大萌博士</td>
-            <td class="num">3</td>
-            <td class="num">¥1,506</td>
-            <td class="num"><strong>¥151</strong></td>
-            <td><span class="rate-badge rate-low">10.0%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">5</span></td>
-            <td class="daren-name">大森测评</td>
-            <td class="num">2</td>
-            <td class="num">¥1,457</td>
-            <td class="num"><strong>¥199</strong></td>
-            <td><span class="rate-badge rate-mid">13.7%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">6</span></td>
-            <td class="daren-name">鱼油君话健康</td>
-            <td class="num">1</td>
-            <td class="num">¥799</td>
-            <td class="num"><strong>¥77</strong></td>
-            <td><span class="rate-badge rate-low">9.7%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">7</span></td>
-            <td class="daren-name">王德发质检员的小号</td>
-            <td class="num">2</td>
-            <td class="num">¥697</td>
-            <td class="num"><strong>¥61</strong></td>
-            <td><span class="rate-badge rate-low">8.9%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">8</span></td>
-            <td class="daren-name">钮祜禄·小小总</td>
-            <td class="num">2</td>
-            <td class="num">¥688</td>
-            <td class="num"><strong>¥139</strong></td>
-            <td><span class="rate-badge rate-high">20.2%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">9</span></td>
-            <td class="daren-name">弓老师</td>
-            <td class="num">3</td>
-            <td class="num">¥640</td>
-            <td class="num"><strong>¥71</strong></td>
-            <td><span class="rate-badge rate-mid">11.1%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">10</span></td>
-            <td class="daren-name">王德发质检员</td>
-            <td class="num">1</td>
-            <td class="num">¥378</td>
-            <td class="num"><strong>¥92</strong></td>
-            <td><span class="rate-badge rate-high">24.5%</span></td>
-        </tr>                        </tbody>
-                    </table>
-                </div>
-                
-                <div class="panel">
-                    <div class="panel-header">
-                        <div class="panel-title">📦 商品利润排行榜 TOP 10</div>
+<tr><td><span class="rank-badge rank-1">1</span></td><td class="daren-name">卢博士(直播号)</td><td class="num">53</td><td class="num">¥20,175</td><td class="num"><strong>¥2,410</strong></td><td><span class="rate-badge rate-mid">11.9%</span></td></tr><tr><td><span class="rank-badge rank-2">2</span></td><td class="daren-name">火火全网测鱼油</td><td class="num">17</td><td class="num">¥10,815</td><td class="num"><strong>¥1,147</strong></td><td><span class="rate-badge rate-mid">10.6%</span></td></tr><tr><td><span class="rank-badge rank-3">3</span></td><td class="daren-name">火火全网测肝片</td><td class="num">4</td><td class="num">¥2,306</td><td class="num"><strong>¥265</strong></td><td><span class="rate-badge rate-mid">11.5%</span></td></tr><tr><td><span class="rank-badge rank-other">4</span></td><td class="daren-name">大萌博士</td><td class="num">3</td><td class="num">¥1,506</td><td class="num"><strong>¥151</strong></td><td><span class="rate-badge rate-low">10.0%</span></td></tr><tr><td><span class="rank-badge rank-other">5</span></td><td class="daren-name">大森测评</td><td class="num">2</td><td class="num">¥1,457</td><td class="num"><strong>¥199</strong></td><td><span class="rate-badge rate-mid">13.7%</span></td></tr><tr><td><span class="rank-badge rank-other">6</span></td><td class="daren-name">鱼油君话健康</td><td class="num">1</td><td class="num">¥799</td><td class="num"><strong>¥77</strong></td><td><span class="rate-badge rate-low">9.7%</span></td></tr><tr><td><span class="rank-badge rank-other">7</span></td><td class="daren-name">王德发质检员的小号</td><td class="num">2</td><td class="num">¥697</td><td class="num"><strong>¥61</strong></td><td><span class="rate-badge rate-low">8.9%</span></td></tr><tr><td><span class="rank-badge rank-other">8</span></td><td class="daren-name">钮祜禄·小小总</td><td class="num">2</td><td class="num">¥688</td><td class="num"><strong>¥139</strong></td><td><span class="rate-badge rate-high">20.2%</span></td></tr><tr><td><span class="rank-badge rank-other">9</span></td><td class="daren-name">弓老师</td><td class="num">3</td><td class="num">¥640</td><td class="num"><strong>¥71</strong></td><td><span class="rate-badge rate-mid">11.1%</span></td></tr><tr><td><span class="rank-badge rank-other">10</span></td><td class="daren-name">王德发质检员</td><td class="num">1</td><td class="num">¥378</td><td class="num"><strong>¥92</strong></td><td><span class="rate-badge rate-high">24.5%</span></td></tr></tbody></table></div><div class="panel"><div class="panel-header"><div class="panel-title">📦 商品利润排行榜 TOP 10</div></div><table class="rank-table"><thead><tr><th>排名</th><th>商品名称</th><th>订单</th><th>销售额</th><th>利润</th><th>利润率</th></tr></thead><tbody><tr><td><span class="rank-badge rank-1">1</span></td><td><div class="product-name">【火火专属】「囤货」HUJ97%高纯EPA深海鱼油</div><div class="product-desc">HUJ25032001-3-H</div></td><td class="num">15</td><td class="num">¥11,285</td><td class="num"><strong>¥1,057</strong></td><td><span class="rate-badge rate-low">9.4%</span></td></tr><tr><td><span class="rank-badge rank-2">2</span></td><td><div class="product-name">【老徐专属】HUJ高吸收脂质体VC好吸收高吸收60</div><div class="product-desc">HUJ24082804</div></td><td class="num">25</td><td class="num">¥4,975</td><td class="num"><strong>¥577</strong></td><td><span class="rate-badge rate-mid">11.6%</span></td></tr><tr><td><span class="rank-badge rank-3">3</span></td><td><div class="product-name">【火火专属】HUJ禾优健成人基础补充剂（骨相（钙+</div><div class="product-desc">4合+混合鱼油</div></td><td class="num">5</td><td class="num">¥3,995</td><td class="num"><strong>¥473</strong></td><td><span class="rate-badge rate-mid">11.9%</span></td></tr><tr><td><span class="rank-badge rank-other">4</span></td><td><div class="product-name">【大萌博士】HUJ禾优健ADK钙60粒/瓶250m</div><div class="product-desc">HUJ250905-3-HUJ</div></td><td class="num">7</td><td class="num">¥3,556</td><td class="num"><strong>¥328</strong></td><td><span class="rate-badge rate-low">9.2%</span></td></tr><tr><td><span class="rank-badge rank-other">5</span></td><td><div class="product-name">【达人】HUJ禾优健活性B族胶囊/高活性高含量多营</div><div class="product-desc">HUJ20240802</div></td><td class="num">14</td><td class="num">¥2,655</td><td class="num"><strong>¥638</strong></td><td><span class="rate-badge rate-high">24.1%</span></td></tr><tr><td><span class="rank-badge rank-other">6</span></td><td><div class="product-name">【卢博士专属】HUJ禾优健成人基础补充剂（骨相（钙</div><div class="product-desc">4合+混合鱼油*3+赠2瓶镁</div></td><td class="num">1</td><td class="num">¥2,397</td><td class="num"><strong>¥252</strong></td><td><span class="rate-badge rate-mid">10.5%</span></td></tr><tr><td><span class="rank-badge rank-other">7</span></td><td><div class="product-name">【卢博士专属】HUJ高吸收脂质体VC好吸收高吸收6</div><div class="product-desc">HUJ24082804-6-H</div></td><td class="num">2</td><td class="num">¥2,298</td><td class="num"><strong>¥231</strong></td><td><span class="rate-badge rate-mid">10.1%</span></td></tr><tr><td><span class="rank-badge rank-other">8</span></td><td><div class="product-name">【大森专属】HUJ多功能健康镁片五种镁更全面氨基酸</div><div class="product-desc">HUJ20240730-6-H</div></td><td class="num">2</td><td class="num">¥1,898</td><td class="num"><strong>¥265</strong></td><td><span class="rate-badge rate-mid">14.0%</span></td></tr><tr><td><span class="rank-badge rank-other">9</span></td><td><div class="product-name">【小小总专属】HUJ多功能健康镁片五种镁更全面氨基</div><div class="product-desc">HUJ20240730</div></td><td class="num">9</td><td class="num">¥1,701</td><td class="num"><strong>¥323</strong></td><td><span class="rate-badge rate-mid">19.0%</span></td></tr><tr><td><span class="rank-badge rank-other">10</span></td><td><div class="product-name">「囤货」HUJ97%高纯EPA深海鱼油软胶囊60粒</div><div class="product-desc">HUJ25032001</div></td><td class="num">3</td><td class="num">¥1,319</td><td class="num"><strong>¥833</strong></td><td><span class="rate-badge rate-high">63.2%</span></td></tr></tbody></table></div>
+            </div>
+            
+            <div class="main-grid">
+                <div class="panel" style="grid-column: 1 / -1;">
+                    <div class="panel-header"><div class="panel-title">💡 关键洞察</div></div>
+                    <div class="insights-grid">
+                        <div class="insight-card good">
+                            <div class="insight-title">✅ 利润亮点</div>
+                            <ul class="insight-list">
+                                <li>利润率 <strong>13.88%</strong></li>
+                                <li>订单量 115 单</li>
+                                <li>销售额 ¥42,338</li>
+                            </ul>
+                        </div>
+                        <div class="insight-card warn">
+                            <div class="insight-title">⚠️ 需要关注</div>
+                            <ul class="insight-list">
+                                <li>退款率 <strong>16.7%</strong></li>
+                                <li>达人佣金占比最高</li>
+                                <li>部分商品利润率偏低</li>
+                            </ul>
+                        </div>
+                        <div class="insight-card info">
+                            <div class="insight-title">💼 优化建议</div>
+                            <ul class="insight-list">
+                                <li>加大高利润率商品推广</li>
+                                <li>优化低利润率商品</li>
+                                <li>降低退货率</li>
+                            </ul>
+                        </div>
                     </div>
-                    <table class="rank-table">
-                        <thead>
-                            <tr><th>排名</th><th>商品</th><th>订单</th><th>销售额</th><th>成本</th><th>利润</th><th>利润率</th></tr>
-                        </thead>
-                        <tbody>
-<tr>
-            <td><span class="rank-badge rank-1">1</span></td>
-            <td class="product-name">HUJ25032001-3-H</td>
-            <td class="num">15</td>
-            <td class="num">¥11,285</td>
-            <td class="num">¥3,119</td>
-            <td class="num"><strong>¥1,057</strong></td>
-            <td><span class="rate-badge rate-low">9.4%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank-2">2</span></td>
-            <td class="product-name">HUJ24082804</td>
-            <td class="num">25</td>
-            <td class="num">¥4,975</td>
-            <td class="num">¥1,159</td>
-            <td class="num"><strong>¥577</strong></td>
-            <td><span class="rate-badge rate-mid">11.6%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank-3">3</span></td>
-            <td class="product-name">4合+混合鱼油</td>
-            <td class="num">5</td>
-            <td class="num">¥3,995</td>
-            <td class="num">¥955</td>
-            <td class="num"><strong>¥473</strong></td>
-            <td><span class="rate-badge rate-mid">11.9%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">4</span></td>
-            <td class="product-name">HUJ250905-3-HUJ</td>
-            <td class="num">7</td>
-            <td class="num">¥3,556</td>
-            <td class="num">¥963</td>
-            <td class="num"><strong>¥328</strong></td>
-            <td><span class="rate-badge rate-low">9.2%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">5</span></td>
-            <td class="product-name">HUJ20240802</td>
-            <td class="num">14</td>
-            <td class="num">¥2,655</td>
-            <td class="num">¥420</td>
-            <td class="num"><strong>¥638</strong></td>
-            <td><span class="rate-badge rate-high">24.1%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">6</span></td>
-            <td class="product-name">4合+混合鱼油*3+赠2瓶镁</td>
-            <td class="num">1</td>
-            <td class="num">¥2,397</td>
-            <td class="num">¥628</td>
-            <td class="num"><strong>¥252</strong></td>
-            <td><span class="rate-badge rate-mid">10.5%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">7</span></td>
-            <td class="product-name">HUJ24082804-6-H</td>
-            <td class="num">2</td>
-            <td class="num">¥2,298</td>
-            <td class="num">¥616</td>
-            <td class="num"><strong>¥231</strong></td>
-            <td><span class="rate-badge rate-mid">10.1%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">8</span></td>
-            <td class="product-name">HUJ20240730-6-H</td>
-            <td class="num">2</td>
-            <td class="num">¥1,898</td>
-            <td class="num">¥417</td>
-            <td class="num"><strong>¥265</strong></td>
-            <td><span class="rate-badge rate-mid">14.0%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">9</span></td>
-            <td class="product-name">HUJ20240730</td>
-            <td class="num">9</td>
-            <td class="num">¥1,701</td>
-            <td class="num">¥263</td>
-            <td class="num"><strong>¥323</strong></td>
-            <td><span class="rate-badge rate-mid">19.0%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">10</span></td>
-            <td class="product-name">HUJ25032001</td>
-            <td class="num">3</td>
-            <td class="num">¥1,319</td>
-            <td class="num">¥174</td>
-            <td class="num"><strong>¥833</strong></td>
-            <td><span class="rate-badge rate-high">63.2%</span></td>
-        </tr>                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
@@ -467,13 +209,13 @@
             <div class="kpi-grid">
                 <div class="kpi-card gmv">
                     <div class="kpi-label">💰 GMV（含退款）</div>
-                    <div class="kpi-value gmv">¥94,825</div>
-                    <div class="kpi-sub">总订单 187 单</div>
+                    <div class="kpi-value gmv">¥111,832</div>
+                    <div class="kpi-sub">总订单 223 单</div>
                 </div>
                 <div class="kpi-card refund">
                     <div class="kpi-label">📉 退款金额</div>
-                    <div class="kpi-value refund">¥0</div>
-                    <div class="kpi-sub">退款率 0.0%</div>
+                    <div class="kpi-value refund">¥17,007</div>
+                    <div class="kpi-sub">退款率 15.2%</div>
                 </div>
                 <div class="kpi-card sales">
                     <div class="kpi-label">💎 净销售额</div>
@@ -487,16 +229,14 @@
                 </div>
                 <div class="kpi-card rate">
                     <div class="kpi-label">📈 有效订单占比</div>
-                    <div class="kpi-value rate">100.0%</div>
-                    <div class="kpi-sub">已关闭 0 单</div>
+                    <div class="kpi-value rate">83.9%</div>
+                    <div class="kpi-sub">已关闭 36 单</div>
                 </div>
             </div>
             
             <div class="main-grid">
                 <div class="panel">
-                    <div class="panel-header">
-                        <div class="panel-title">💸 成本结构分析</div>
-                    </div>
+                    <div class="panel-header"><div class="panel-title">💸 成本结构分析</div></div>
                     <div class="cost-list">
                         <div class="cost-item">
                             <div class="cost-label">达人佣金</div>
@@ -532,279 +272,36 @@
                 </div>
                 
                 <div class="panel">
-                    <div class="panel-header">
-                        <div class="panel-title">🥧 达人成交占比</div>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="pie-2026-04-2"></canvas>
-                    </div>
+                    <div class="panel-header"><div class="panel-title">🥧 达人成交占比</div></div>
+                    <div class="chart-container"><canvas id="pie-2026-04-2"></canvas></div>
                 </div>
             </div>
             
             <div class="main-grid">
                 <div class="panel">
-                    <div class="panel-header">
-                        <div class="panel-title">🏆 达人利润排行榜 TOP 10</div>
-                    </div>
+                    <div class="panel-header"><div class="panel-title">🏆 达人利润排行榜 TOP 10</div></div>
                     <table class="rank-table">
-                        <thead>
-                            <tr><th>排名</th><th>达人</th><th>订单</th><th>销售额</th><th>利润</th><th>利润率</th></tr>
-                        </thead>
+                        <thead><tr><th>排名</th><th>达人</th><th>订单</th><th>销售额</th><th>利润</th><th>利润率</th></tr></thead>
                         <tbody>
-<tr>
-            <td><span class="rank-badge rank-1">1</span></td>
-            <td class="daren-name">卢博士(直播号)</td>
-            <td class="num">100</td>
-            <td class="num">¥46,011</td>
-            <td class="num"><strong>¥5,356</strong></td>
-            <td><span class="rate-badge rate-mid">11.6%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank-2">2</span></td>
-            <td class="daren-name">火火全网测鱼油</td>
-            <td class="num">33</td>
-            <td class="num">¥23,969</td>
-            <td class="num"><strong>¥2,400</strong></td>
-            <td><span class="rate-badge rate-low">10.0%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank-3">3</span></td>
-            <td class="daren-name">火火全网测肝片</td>
-            <td class="num">9</td>
-            <td class="num">¥6,331</td>
-            <td class="num"><strong>¥671</strong></td>
-            <td><span class="rate-badge rate-mid">10.6%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">4</span></td>
-            <td class="daren-name">王德发质检员</td>
-            <td class="num">11</td>
-            <td class="num">¥3,971</td>
-            <td class="num"><strong>¥528</strong></td>
-            <td><span class="rate-badge rate-mid">13.3%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">5</span></td>
-            <td class="daren-name">大萌博士</td>
-            <td class="num">7</td>
-            <td class="num">¥3,759</td>
-            <td class="num"><strong>¥437</strong></td>
-            <td><span class="rate-badge rate-mid">11.6%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">6</span></td>
-            <td class="daren-name">大森测评</td>
-            <td class="num">2</td>
-            <td class="num">¥1,457</td>
-            <td class="num"><strong>¥199</strong></td>
-            <td><span class="rate-badge rate-mid">13.7%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">7</span></td>
-            <td class="daren-name">钮祜禄·小小总</td>
-            <td class="num">4</td>
-            <td class="num">¥1,052</td>
-            <td class="num"><strong>¥232</strong></td>
-            <td><span class="rate-badge rate-high">22.1%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">8</span></td>
-            <td class="daren-name">鱼油君话健康</td>
-            <td class="num">1</td>
-            <td class="num">¥799</td>
-            <td class="num"><strong>¥77</strong></td>
-            <td><span class="rate-badge rate-low">9.7%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">9</span></td>
-            <td class="daren-name">王德发质检员的小号</td>
-            <td class="num">2</td>
-            <td class="num">¥697</td>
-            <td class="num"><strong>¥61</strong></td>
-            <td><span class="rate-badge rate-low">8.9%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">10</span></td>
-            <td class="daren-name">弓老师</td>
-            <td class="num">3</td>
-            <td class="num">¥640</td>
-            <td class="num"><strong>¥71</strong></td>
-            <td><span class="rate-badge rate-mid">11.1%</span></td>
-        </tr>                        </tbody>
-                    </table>
-                </div>
-                
-                <div class="panel">
-                    <div class="panel-header">
-                        <div class="panel-title">📦 商品利润排行榜 TOP 10</div>
-                    </div>
-                    <table class="rank-table">
-                        <thead>
-                            <tr><th>排名</th><th>商品</th><th>订单</th><th>销售额</th><th>成本</th><th>利润</th><th>利润率</th></tr>
-                        </thead>
-                        <tbody>
-<tr>
-            <td><span class="rank-badge rank-1">1</span></td>
-            <td class="product-name">HUJ25032001-3-H</td>
-            <td class="num">28</td>
-            <td class="num">¥21,072</td>
-            <td class="num">¥5,823</td>
-            <td class="num"><strong>¥1,946</strong></td>
-            <td><span class="rate-badge rate-low">9.2%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank-2">2</span></td>
-            <td class="product-name">4合+混合鱼油</td>
-            <td class="num">15</td>
-            <td class="num">¥11,985</td>
-            <td class="num">¥2,865</td>
-            <td class="num"><strong>¥1,498</strong></td>
-            <td><span class="rate-badge rate-mid">12.5%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank-3">3</span></td>
-            <td class="product-name">HUJ24082804</td>
-            <td class="num">42</td>
-            <td class="num">¥8,756</td>
-            <td class="num">¥1,947</td>
-            <td class="num"><strong>¥1,080</strong></td>
-            <td><span class="rate-badge rate-mid">12.3%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">4</span></td>
-            <td class="product-name">HUJ25032001-5-H</td>
-            <td class="num">7</td>
-            <td class="num">¥8,183</td>
-            <td class="num">¥2,268</td>
-            <td class="num"><strong>¥695</strong></td>
-            <td><span class="rate-badge rate-low">8.5%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">5</span></td>
-            <td class="product-name">HUJ250905-3-HUJ</td>
-            <td class="num">15</td>
-            <td class="num">¥7,620</td>
-            <td class="num">¥2,063</td>
-            <td class="num"><strong>¥697</strong></td>
-            <td><span class="rate-badge rate-low">9.2%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">6</span></td>
-            <td class="product-name">4合+混合鱼油*3+赠2瓶镁</td>
-            <td class="num">3</td>
-            <td class="num">¥7,191</td>
-            <td class="num">¥1,884</td>
-            <td class="num"><strong>¥757</strong></td>
-            <td><span class="rate-badge rate-mid">10.5%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">7</span></td>
-            <td class="product-name">HUJ24082804-6-H</td>
-            <td class="num">3</td>
-            <td class="num">¥3,447</td>
-            <td class="num">¥924</td>
-            <td class="num"><strong>¥339</strong></td>
-            <td><span class="rate-badge rate-low">9.9%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">8</span></td>
-            <td class="product-name">HUJ20240802</td>
-            <td class="num">18</td>
-            <td class="num">¥3,383</td>
-            <td class="num">¥540</td>
-            <td class="num"><strong>¥801</strong></td>
-            <td><span class="rate-badge rate-high">23.7%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">9</span></td>
-            <td class="product-name">HUJ20240802-6-H</td>
-            <td class="num">2</td>
-            <td class="num">¥3,062</td>
-            <td class="num">¥452</td>
-            <td class="num"><strong>¥1,758</strong></td>
-            <td><span class="rate-badge rate-high">57.4%</span></td>
-        </tr><tr>
-            <td><span class="rank-badge rank_other">10</span></td>
-            <td class="product-name">HUJ250905</td>
-            <td class="num">13</td>
-            <td class="num">¥2,646</td>
-            <td class="num">¥469</td>
-            <td class="num"><strong>¥477</strong></td>
-            <td><span class="rate-badge rate-mid">18.0%</span></td>
-        </tr>                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div id="data-all">
-            <div class="kpi-grid">
-                <div class="kpi-card gmv">
-                    <div class="kpi-label">💰 GMV（含退款）</div>
-                    <div class="kpi-value gmv">¥137,163</div>
-                    <div class="kpi-sub">总订单 285 单</div>
-                </div>
-                <div class="kpi-card refund">
-                    <div class="kpi-label">📉 退款金额</div>
-                    <div class="kpi-value refund">¥0</div>
-                    <div class="kpi-sub">退款率 0.0%</div>
-                </div>
-                <div class="kpi-card sales">
-                    <div class="kpi-label">💎 净销售额</div>
-                    <div class="kpi-value sales">¥137,163</div>
-                    <div class="kpi-sub">有效订单 285 单</div>
-                </div>
-                <div class="kpi-card profit">
-                    <div class="kpi-label">🎉 净利润</div>
-                    <div class="kpi-value profit">¥19,032</div>
-                    <div class="kpi-sub">利润率 13.88%</div>
-                </div>
-                <div class="kpi-card rate">
-                    <div class="kpi-label">📈 有效订单占比</div>
-                    <div class="kpi-value rate">100.0%</div>
-                    <div class="kpi-sub">已关闭 0 单</div>
-                </div>
+<tr><td><span class="rank-badge rank-1">1</span></td><td class="daren-name">卢博士(直播号)</td><td class="num">100</td><td class="num">¥46,011</td><td class="num"><strong>¥5,356</strong></td><td><span class="rate-badge rate-mid">11.6%</span></td></tr><tr><td><span class="rank-badge rank-2">2</span></td><td class="daren-name">火火全网测鱼油</td><td class="num">33</td><td class="num">¥23,969</td><td class="num"><strong>¥2,400</strong></td><td><span class="rate-badge rate-low">10.0%</span></td></tr><tr><td><span class="rank-badge rank-3">3</span></td><td class="daren-name">火火全网测肝片</td><td class="num">9</td><td class="num">¥6,331</td><td class="num"><strong>¥671</strong></td><td><span class="rate-badge rate-mid">10.6%</span></td></tr><tr><td><span class="rank-badge rank-other">4</span></td><td class="daren-name">王德发质检员</td><td class="num">11</td><td class="num">¥3,971</td><td class="num"><strong>¥528</strong></td><td><span class="rate-badge rate-mid">13.3%</span></td></tr><tr><td><span class="rank-badge rank-other">5</span></td><td class="daren-name">大萌博士</td><td class="num">7</td><td class="num">¥3,759</td><td class="num"><strong>¥437</strong></td><td><span class="rate-badge rate-mid">11.6%</span></td></tr><tr><td><span class="rank-badge rank-other">6</span></td><td class="daren-name">大森测评</td><td class="num">2</td><td class="num">¥1,457</td><td class="num"><strong>¥199</strong></td><td><span class="rate-badge rate-mid">13.7%</span></td></tr><tr><td><span class="rank-badge rank-other">7</span></td><td class="daren-name">钮祜禄·小小总</td><td class="num">4</td><td class="num">¥1,052</td><td class="num"><strong>¥232</strong></td><td><span class="rate-badge rate-high">22.1%</span></td></tr><tr><td><span class="rank-badge rank-other">8</span></td><td class="daren-name">鱼油君话健康</td><td class="num">1</td><td class="num">¥799</td><td class="num"><strong>¥77</strong></td><td><span class="rate-badge rate-low">9.7%</span></td></tr><tr><td><span class="rank-badge rank-other">9</span></td><td class="daren-name">王德发质检员的小号</td><td class="num">2</td><td class="num">¥697</td><td class="num"><strong>¥61</strong></td><td><span class="rate-badge rate-low">8.9%</span></td></tr><tr><td><span class="rank-badge rank-other">10</span></td><td class="daren-name">弓老师</td><td class="num">3</td><td class="num">¥640</td><td class="num"><strong>¥71</strong></td><td><span class="rate-badge rate-mid">11.1%</span></td></tr></tbody></table></div><div class="panel"><div class="panel-header"><div class="panel-title">📦 商品利润排行榜 TOP 10</div></div><table class="rank-table"><thead><tr><th>排名</th><th>商品名称</th><th>订单</th><th>销售额</th><th>利润</th><th>利润率</th></tr></thead><tbody><tr><td><span class="rank-badge rank-1">1</span></td><td><div class="product-name">【火火专属】「囤货」HUJ97%高纯EPA深海鱼油</div><div class="product-desc">HUJ25032001-3-H</div></td><td class="num">28</td><td class="num">¥21,072</td><td class="num"><strong>¥1,946</strong></td><td><span class="rate-badge rate-low">9.2%</span></td></tr><tr><td><span class="rank-badge rank-2">2</span></td><td><div class="product-name">【火火专属】HUJ禾优健成人基础补充剂（骨相（钙+</div><div class="product-desc">4合+混合鱼油</div></td><td class="num">15</td><td class="num">¥11,985</td><td class="num"><strong>¥1,498</strong></td><td><span class="rate-badge rate-mid">12.5%</span></td></tr><tr><td><span class="rank-badge rank-3">3</span></td><td><div class="product-name">【老徐专属】HUJ高吸收脂质体VC好吸收高吸收60</div><div class="product-desc">HUJ24082804</div></td><td class="num">42</td><td class="num">¥8,756</td><td class="num"><strong>¥1,080</strong></td><td><span class="rate-badge rate-mid">12.3%</span></td></tr><tr><td><span class="rank-badge rank-other">4</span></td><td><div class="product-name">【火火专属】「囤货」HUJ97%高纯EPA深海鱼油</div><div class="product-desc">HUJ25032001-5-H</div></td><td class="num">7</td><td class="num">¥8,183</td><td class="num"><strong>¥695</strong></td><td><span class="rate-badge rate-low">8.5%</span></td></tr><tr><td><span class="rank-badge rank-other">5</span></td><td><div class="product-name">【大萌博士】HUJ禾优健ADK钙60粒/瓶250m</div><div class="product-desc">HUJ250905-3-HUJ</div></td><td class="num">15</td><td class="num">¥7,620</td><td class="num"><strong>¥697</strong></td><td><span class="rate-badge rate-low">9.2%</span></td></tr><tr><td><span class="rank-badge rank-other">6</span></td><td><div class="product-name">【卢博士专属】HUJ禾优健成人基础补充剂（骨相（钙</div><div class="product-desc">4合+混合鱼油*3+赠2瓶镁</div></td><td class="num">3</td><td class="num">¥7,191</td><td class="num"><strong>¥757</strong></td><td><span class="rate-badge rate-mid">10.5%</span></td></tr><tr><td><span class="rank-badge rank-other">7</span></td><td><div class="product-name">【卢博士专属】HUJ高吸收脂质体VC好吸收高吸收6</div><div class="product-desc">HUJ24082804-6-H</div></td><td class="num">3</td><td class="num">¥3,447</td><td class="num"><strong>¥339</strong></td><td><span class="rate-badge rate-low">9.9%</span></td></tr><tr><td><span class="rank-badge rank-other">8</span></td><td><div class="product-name">【达人】HUJ禾优健活性B族胶囊/高活性高含量多营</div><div class="product-desc">HUJ20240802</div></td><td class="num">18</td><td class="num">¥3,383</td><td class="num"><strong>¥801</strong></td><td><span class="rate-badge rate-high">23.7%</span></td></tr><tr><td><span class="rank-badge rank-other">9</span></td><td><div class="product-name">【卢博士专属】HUJ禾优健活性B族胶囊/高活性高含</div><div class="product-desc">HUJ20240802-6-H</div></td><td class="num">2</td><td class="num">¥3,062</td><td class="num"><strong>¥1,758</strong></td><td><span class="rate-badge rate-high">57.4%</span></td></tr><tr><td><span class="rank-badge rank-other">10</span></td><td><div class="product-name">【王德发专属】HUJ禾优健ADK钙60粒/瓶250</div><div class="product-desc">HUJ250905</div></td><td class="num">13</td><td class="num">¥2,646</td><td class="num"><strong>¥477</strong></td><td><span class="rate-badge rate-mid">18.0%</span></td></tr></tbody></table></div>
             </div>
             
             <div class="main-grid">
-                <div class="panel">
-                    <div class="panel-header">
-                        <div class="panel-title">💸 成本结构分析</div>
-                    </div>
-                    <div class="cost-list">
-                        <div class="cost-item">
-                            <div class="cost-label">达人佣金</div>
-                            <div class="cost-bar"><div class="cost-fill commission" style="width: 100%"></div></div>
-                            <div class="cost-value">¥64,797</div>
-                            <div class="cost-percent">47.2%</div>
-                        </div>
-                        <div class="cost-item">
-                            <div class="cost-label">商品成本</div>
-                            <div class="cost-bar"><div class="cost-fill product" style="width: 50.906677778292206%"></div></div>
-                            <div class="cost-value">¥32,986</div>
-                            <div class="cost-percent">24.0%</div>
-                        </div>
-                        <div class="cost-item">
-                            <div class="cost-label">关税</div>
-                            <div class="cost-bar"><div class="cost-fill tariff" style="width: 17.655138355170763%"></div></div>
-                            <div class="cost-value">¥11,440</div>
-                            <div class="cost-percent">8.3%</div>
-                        </div>
-                        <div class="cost-item">
-                            <div class="cost-label">平台扣点</div>
-                            <div class="cost-bar"><div class="cost-fill platform" style="width: 8.466441347593252%"></div></div>
-                            <div class="cost-value">¥5,486</div>
-                            <div class="cost-percent">4.0%</div>
-                        </div>
-                        <div class="cost-item">
-                            <div class="cost-label">快递费</div>
-                            <div class="cost-bar"><div class="cost-fill express" style="width: 5.278022130654197%"></div></div>
-                            <div class="cost-value">¥3,420</div>
-                            <div class="cost-percent">2.5%</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="panel">
-                    <div class="panel-header">
-                        <div class="panel-title">💡 关键洞察</div>
-                    </div>
-                    <div class="insights-grid" style="grid-template-columns: 1fr;">
+                <div class="panel" style="grid-column: 1 / -1;">
+                    <div class="panel-header"><div class="panel-title">💡 关键洞察</div></div>
+                    <div class="insights-grid">
                         <div class="insight-card good">
                             <div class="insight-title">✅ 利润亮点</div>
                             <ul class="insight-list">
-                                <li>整体利润率 <strong>13.88%</strong></li>
-                                <li>订单量 285 单</li>
-                                <li>销售额 ¥137,163</li>
+                                <li>利润率 <strong>13.87%</strong></li>
+                                <li>订单量 223 单</li>
+                                <li>销售额 ¥94,825</li>
                             </ul>
                         </div>
                         <div class="insight-card warn">
                             <div class="insight-title">⚠️ 需要关注</div>
                             <ul class="insight-list">
-                                <li>退款率 <strong>0.0%</strong></li>
+                                <li>退款率 <strong>15.2%</strong></li>
                                 <li>达人佣金占比最高</li>
                                 <li>部分商品利润率偏低</li>
                             </ul>
@@ -821,84 +318,88 @@
                 </div>
             </div>
         </div>
+
+        <div id="data-all">
+            <div class="kpi-grid">
+                <div class="kpi-card gmv">
+                    <div class="kpi-label">💰 GMV（含退款）</div>
+                    <div class="kpi-value gmv">¥162,638</div>
+                    <div class="kpi-sub">总订单 338 单</div>
+                </div>
+                <div class="kpi-card refund">
+                    <div class="kpi-label">📉 退款金额</div>
+                    <div class="kpi-value refund">¥25,475</div>
+                    <div class="kpi-sub">退款率 15.7%</div>
+                </div>
+                <div class="kpi-card sales">
+                    <div class="kpi-label">💎 净销售额</div>
+                    <div class="kpi-value sales">¥137,163</div>
+                    <div class="kpi-sub">有效订单 285 单</div>
+                </div>
+                <div class="kpi-card profit">
+                    <div class="kpi-label">🎉 净利润</div>
+                    <div class="kpi-value profit">¥19,032</div>
+                    <div class="kpi-sub">利润率 13.88%</div>
+                </div>
+                <div class="kpi-card rate">
+                    <div class="kpi-label">📈 有效订单占比</div>
+                    <div class="kpi-value rate">84.3%</div>
+                    <div class="kpi-sub">已关闭 53 单</div>
+                </div>
+            </div>
+        </div>
         
         <div class="footer">
-            🦞 OpenClaw 智能利润分析 | 2026年4月 | 数据来源：抖音电商后台
+            🦞 OpenClaw 智能利润分析 | 2026年4月 | 更新时间: 2026-04-03 14:24:24
         </div>
     </div>
     
     <script>
-        // 达人成交占比饼图
-        const pieColors = ["#6366f1", "#8b5cf6", "#a855f7", "#d946ef", "#f472b6", "#fb7185", "#f87171", "#fbbf24", "#facc15", "#a3e635", "#4ade80", "#34d399", "#22d3d1", "#06b6d4", "#0ea5e9", "#3b82f6", "#60a5fa"];
+        const pieColors = ['#6366f1', '#8b5cf6', '#a855f7', '#d946ef', '#f472b6', '#fb7185', '#f87171', '#fbbf24', '#facc15', '#a3e635', '#4ade80', '#34d399', '#22d3d1', '#06b6d4', '#0ea5e9', '#3b82f6', '#60a5fa'];
+        const allData = {"2026-04-1": {"gmv": 50806, "refund": 8468, "sales": 42338, "profit": 5876, "profit_rate": 13.88, "valid_orders": 98, "total_orders": 115, "closed_orders": 17, "refund_rate": 16.7, "cost": {"commission": 19971, "product": 10089, "tariff": 3531, "platform": 1693, "express": 1176}, "daren_top10": [["\u5362\u535a\u58eb(\u76f4\u64ad\u53f7)", 53, 20175, 2410, 11.9], ["\u706b\u706b\u5168\u7f51\u6d4b\u9c7c\u6cb9", 17, 10815, 1147, 10.6], ["\u706b\u706b\u5168\u7f51\u6d4b\u809d\u7247", 4, 2306, 265, 11.5], ["\u5927\u840c\u535a\u58eb", 3, 1506, 151, 10.0], ["\u5927\u68ee\u6d4b\u8bc4", 2, 1457, 199, 13.7], ["\u9c7c\u6cb9\u541b\u8bdd\u5065\u5eb7", 1, 799, 77, 9.7], ["\u738b\u5fb7\u53d1\u8d28\u68c0\u5458\u7684\u5c0f\u53f7", 2, 697, 61, 8.9], ["\u94ae\u795c\u7984\u00b7\u5c0f\u5c0f\u603b", 2, 688, 139, 20.2], ["\u5f13\u8001\u5e08", 3, 640, 71, 11.1], ["\u738b\u5fb7\u53d1\u8d28\u68c0\u5458", 1, 378, 92, 24.5]], "product_top10": [["HUJ25032001-3-H", "\u3010\u706b\u706b\u4e13\u5c5e\u3011\u300c\u56e4\u8d27\u300dHUJ97%\u9ad8\u7eafEPA\u6df1\u6d77\u9c7c\u6cb9", 15, 11285, 3119, 1057, 9.4], ["HUJ24082804", "\u3010\u8001\u5f90\u4e13\u5c5e\u3011HUJ\u9ad8\u5438\u6536\u8102\u8d28\u4f53VC\u597d\u5438\u6536\u9ad8\u5438\u653660", 25, 4975, 1159, 577, 11.6], ["4\u5408+\u6df7\u5408\u9c7c\u6cb9", "\u3010\u706b\u706b\u4e13\u5c5e\u3011HUJ\u79be\u4f18\u5065\u6210\u4eba\u57fa\u7840\u8865\u5145\u5242\uff08\u9aa8\u76f8\uff08\u9499+", 5, 3995, 955, 473, 11.9], ["HUJ250905-3-HUJ", "\u3010\u5927\u840c\u535a\u58eb\u3011HUJ\u79be\u4f18\u5065ADK\u949960\u7c92/\u74f6250m", 7, 3556, 963, 328, 9.2], ["HUJ20240802", "\u3010\u8fbe\u4eba\u3011HUJ\u79be\u4f18\u5065\u6d3b\u6027B\u65cf\u80f6\u56ca/\u9ad8\u6d3b\u6027\u9ad8\u542b\u91cf\u591a\u8425", 14, 2655, 420, 638, 24.1], ["4\u5408+\u6df7\u5408\u9c7c\u6cb9*3+\u8d602\u74f6\u9541", "\u3010\u5362\u535a\u58eb\u4e13\u5c5e\u3011HUJ\u79be\u4f18\u5065\u6210\u4eba\u57fa\u7840\u8865\u5145\u5242\uff08\u9aa8\u76f8\uff08\u9499", 1, 2397, 628, 252, 10.5], ["HUJ24082804-6-H", "\u3010\u5362\u535a\u58eb\u4e13\u5c5e\u3011HUJ\u9ad8\u5438\u6536\u8102\u8d28\u4f53VC\u597d\u5438\u6536\u9ad8\u5438\u65366", 2, 2298, 616, 231, 10.1], ["HUJ20240730-6-H", "\u3010\u5927\u68ee\u4e13\u5c5e\u3011HUJ\u591a\u529f\u80fd\u5065\u5eb7\u9541\u7247\u4e94\u79cd\u9541\u66f4\u5168\u9762\u6c28\u57fa\u9178", 2, 1898, 417, 265, 14.0], ["HUJ20240730", "\u3010\u5c0f\u5c0f\u603b\u4e13\u5c5e\u3011HUJ\u591a\u529f\u80fd\u5065\u5eb7\u9541\u7247\u4e94\u79cd\u9541\u66f4\u5168\u9762\u6c28\u57fa", 9, 1701, 263, 323, 19.0], ["HUJ25032001", "\u300c\u56e4\u8d27\u300dHUJ97%\u9ad8\u7eafEPA\u6df1\u6d77\u9c7c\u6cb9\u8f6f\u80f6\u56ca60\u7c92", 3, 1319, 174, 833, 63.2]], "daren_sales_pie": [["\u5362\u535a\u58eb(\u76f4\u64ad\u53f7)", 20175], ["\u706b\u706b\u5168\u7f51\u6d4b\u9c7c\u6cb9", 10815], ["\u706b\u706b\u5168\u7f51\u6d4b\u809d\u7247", 2306], ["\u5927\u840c\u535a\u58eb", 1506], ["\u5927\u68ee\u6d4b\u8bc4", 1457], ["\u9c7c\u6cb9\u541b\u8bdd\u5065\u5eb7", 799], ["\u738b\u5fb7\u53d1\u8d28\u68c0\u5458\u7684\u5c0f\u53f7", 697], ["\u94ae\u795c\u7984\u00b7\u5c0f\u5c0f\u603b", 688], ["\u5f13\u8001\u5e08", 640], ["\u738b\u5fb7\u53d1\u8d28\u68c0\u5458", 378], ["\u94a2\u7259\u5ed6\u535a\u58eb", 374], ["\u68e3\u68e3\u804a\u6297\u8870", 371], ["\u8425\u517b\u5e08\u601d\u529b-\u8bf4\u9c7c\u6cb9", 299], ["\u8001\u5f90\u8425\u517b\u54c1\u6d4b\u8bc4-\u7cbe\u51c6\u8425\u517b", 199], ["\u827e\u7c73\u6297\u88701\u5bf91\u54a8\u8be2\u53f7", 199], ["cc\u6865\u672c\u65e5\u8bb0", 126]]}, "2026-04-2": {"gmv": 111832, "refund": 17007, "sales": 94825, "profit": 13156, "profit_rate": 13.87, "valid_orders": 187, "total_orders": 223, "closed_orders": 36, "refund_rate": 15.2, "cost": {"commission": 44825, "product": 22897, "tariff": 7909, "platform": 3793, "express": 2244}, "daren_top10": [["\u5362\u535a\u58eb(\u76f4\u64ad\u53f7)", 100, 46011, 5356, 11.6], ["\u706b\u706b\u5168\u7f51\u6d4b\u9c7c\u6cb9", 33, 23969, 2400, 10.0], ["\u706b\u706b\u5168\u7f51\u6d4b\u809d\u7247", 9, 6331, 671, 10.6], ["\u738b\u5fb7\u53d1\u8d28\u68c0\u5458", 11, 3971, 528, 13.3], ["\u5927\u840c\u535a\u58eb", 7, 3759, 437, 11.6], ["\u5927\u68ee\u6d4b\u8bc4", 2, 1457, 199, 13.7], ["\u94ae\u795c\u7984\u00b7\u5c0f\u5c0f\u603b", 4, 1052, 232, 22.1], ["\u9c7c\u6cb9\u541b\u8bdd\u5065\u5eb7", 1, 799, 77, 9.7], ["\u738b\u5fb7\u53d1\u8d28\u68c0\u5458\u7684\u5c0f\u53f7", 2, 697, 61, 8.9], ["\u5f13\u8001\u5e08", 3, 640, 71, 11.1]], "product_top10": [["HUJ25032001-3-H", "\u3010\u706b\u706b\u4e13\u5c5e\u3011\u300c\u56e4\u8d27\u300dHUJ97%\u9ad8\u7eafEPA\u6df1\u6d77\u9c7c\u6cb9", 28, 21072, 5823, 1946, 9.2], ["4\u5408+\u6df7\u5408\u9c7c\u6cb9", "\u3010\u706b\u706b\u4e13\u5c5e\u3011HUJ\u79be\u4f18\u5065\u6210\u4eba\u57fa\u7840\u8865\u5145\u5242\uff08\u9aa8\u76f8\uff08\u9499+", 15, 11985, 2865, 1498, 12.5], ["HUJ24082804", "\u3010\u8001\u5f90\u4e13\u5c5e\u3011HUJ\u9ad8\u5438\u6536\u8102\u8d28\u4f53VC\u597d\u5438\u6536\u9ad8\u5438\u653660", 42, 8756, 1947, 1080, 12.3], ["HUJ25032001-5-H", "\u3010\u706b\u706b\u4e13\u5c5e\u3011\u300c\u56e4\u8d27\u300dHUJ97%\u9ad8\u7eafEPA\u6df1\u6d77\u9c7c\u6cb9", 7, 8183, 2268, 695, 8.5], ["HUJ250905-3-HUJ", "\u3010\u5927\u840c\u535a\u58eb\u3011HUJ\u79be\u4f18\u5065ADK\u949960\u7c92/\u74f6250m", 15, 7620, 2063, 697, 9.2], ["4\u5408+\u6df7\u5408\u9c7c\u6cb9*3+\u8d602\u74f6\u9541", "\u3010\u5362\u535a\u58eb\u4e13\u5c5e\u3011HUJ\u79be\u4f18\u5065\u6210\u4eba\u57fa\u7840\u8865\u5145\u5242\uff08\u9aa8\u76f8\uff08\u9499", 3, 7191, 1884, 757, 10.5], ["HUJ24082804-6-H", "\u3010\u5362\u535a\u58eb\u4e13\u5c5e\u3011HUJ\u9ad8\u5438\u6536\u8102\u8d28\u4f53VC\u597d\u5438\u6536\u9ad8\u5438\u65366", 3, 3447, 924, 339, 9.9], ["HUJ20240802", "\u3010\u8fbe\u4eba\u3011HUJ\u79be\u4f18\u5065\u6d3b\u6027B\u65cf\u80f6\u56ca/\u9ad8\u6d3b\u6027\u9ad8\u542b\u91cf\u591a\u8425", 18, 3383, 540, 801, 23.7], ["HUJ20240802-6-H", "\u3010\u5362\u535a\u58eb\u4e13\u5c5e\u3011HUJ\u79be\u4f18\u5065\u6d3b\u6027B\u65cf\u80f6\u56ca/\u9ad8\u6d3b\u6027\u9ad8\u542b", 2, 3062, 452, 1758, 57.4], ["HUJ250905", "\u3010\u738b\u5fb7\u53d1\u4e13\u5c5e\u3011HUJ\u79be\u4f18\u5065ADK\u949960\u7c92/\u74f6250", 13, 2646, 469, 477, 18.0]], "daren_sales_pie": [["\u5362\u535a\u58eb(\u76f4\u64ad\u53f7)", 46011], ["\u706b\u706b\u5168\u7f51\u6d4b\u9c7c\u6cb9", 23969], ["\u706b\u706b\u5168\u7f51\u6d4b\u809d\u7247", 6331], ["\u738b\u5fb7\u53d1\u8d28\u68c0\u5458", 3971], ["\u5927\u840c\u535a\u58eb", 3759], ["\u5927\u68ee\u6d4b\u8bc4", 1457], ["\u94ae\u795c\u7984\u00b7\u5c0f\u5c0f\u603b", 1052], ["\u9c7c\u6cb9\u541b\u8bdd\u5065\u5eb7", 799], ["\u738b\u5fb7\u53d1\u8d28\u68c0\u5458\u7684\u5c0f\u53f7", 697], ["\u5f13\u8001\u5e08", 640], ["\u6770\u745eGong", 598], ["\u94a2\u7259\u5ed6\u535a\u58eb", 507], ["\u6ce8\u518c\u8425\u517b\u5e08\u5b5f\u5e38", 398], ["\u68e3\u68e3\u804a\u6297\u8870", 371], ["\u8425\u517b\u5e08\u601d\u529b-\u8bf4\u9c7c\u6cb9", 299], ["\u8001\u5f90\u8425\u517b\u54c1\u6d4b\u8bc4-\u7cbe\u51c6\u8425\u517b", 199], ["\u827e\u7c73\u6297\u88701\u5bf91\u54a8\u8be2\u53f7", 199], ["cc\u6865\u672c\u65e5\u8bb0", 126]]}, "all": {"gmv": 162638, "refund": 25475, "sales": 137163, "profit": 19032, "profit_rate": 13.88, "valid_orders": 285, "total_orders": 338, "closed_orders": 53, "refund_rate": 15.7, "cost": {"commission": 64797, "product": 32986, "tariff": 11440, "platform": 5486, "express": 3420}}};
         
-        function showDate(date) {
-            // 隐藏所有数据
+        function showDate(date) {{
             document.getElementById('data-2026-04-1').classList.add('hidden');
             document.getElementById('data-2026-04-2').classList.add('hidden');
             document.getElementById('data-all').classList.add('hidden');
             
-            // 显示选中数据
-            if (date === 'all') {
+            if (date === 'all') {{
                 document.getElementById('data-all').classList.remove('hidden');
                 document.getElementById('periodLabel').textContent = '统计周期：2026年4月1日 - 4月2日（本月累计）';
-            } else {
-                document.getElementById('data-' + date).classList.remove('hidden');
-                var day = date.replace('2026-04-', '');
-                document.getElementById('periodLabel').textContent = '统计周期：2026年4月' + day + '日';
-            }
-            
-            // 更新按钮状态
-            document.querySelectorAll('.date-btn').forEach(btn => btn.classList.remove('active'));
-            if (date === 'all') {
                 document.getElementById('btn-all').classList.add('active');
-            } else {
+            }} else {{
+                document.getElementById('data-' + date).classList.remove('hidden');
+                document.getElementById('periodLabel').textContent = '统计周期：2026年4月' + date.replace('2026-04-', '') + '日';
                 document.getElementById('btn-' + date).classList.add('active');
-            }
+            }}
             
-            // 重新渲染饼图
-            setTimeout(() => {
-                if (date === '2026-04-1') initPie('2026-04-1');
-                if (date === '2026-04-2') initPie('2026-04-2');
-            }, 100);
-        }
+            document.querySelectorAll('.date-btn').forEach(btn => {{ if (btn.id !== 'btn-' + date && btn.id !== 'btn-all') btn.classList.remove('active'); }});
+            if (date !== 'all') document.getElementById('btn-all').classList.remove('active');
+            
+            setTimeout(() => {{ initPie(date); }}, 100);
+        }}
         
-        function initPie(date) {
+        function initPie(date) {{
             const ctx = document.getElementById('pie-' + date);
             if (!ctx) return;
-            
-            const data = {"2026-04-1": {"gmv": 42338, "refund": 0, "sales": 42338, "profit": 5876, "profit_rate": 13.88, "valid_orders": 98, "total_orders": 98, "closed_orders": 0, "refund_rate": 0.0, "cost": {"commission": 19971, "product": 10089, "tariff": 3531, "platform": 1693, "express": 1176}, "daren_top10": [["\u5362\u535a\u58eb(\u76f4\u64ad\u53f7)", 53, 20175, 2410, 11.9], ["\u706b\u706b\u5168\u7f51\u6d4b\u9c7c\u6cb9", 17, 10815, 1147, 10.6], ["\u706b\u706b\u5168\u7f51\u6d4b\u809d\u7247", 4, 2306, 265, 11.5], ["\u5927\u840c\u535a\u58eb", 3, 1506, 151, 10.0], ["\u5927\u68ee\u6d4b\u8bc4", 2, 1457, 199, 13.7], ["\u9c7c\u6cb9\u541b\u8bdd\u5065\u5eb7", 1, 799, 77, 9.7], ["\u738b\u5fb7\u53d1\u8d28\u68c0\u5458\u7684\u5c0f\u53f7", 2, 697, 61, 8.9], ["\u94ae\u795c\u7984\u00b7\u5c0f\u5c0f\u603b", 2, 688, 139, 20.2], ["\u5f13\u8001\u5e08", 3, 640, 71, 11.1], ["\u738b\u5fb7\u53d1\u8d28\u68c0\u5458", 1, 378, 92, 24.5]], "product_top10": [["HUJ25032001-3-H", 15, 11285, 3119, 1057, 9.4], ["HUJ24082804", 25, 4975, 1159, 577, 11.6], ["4\u5408+\u6df7\u5408\u9c7c\u6cb9", 5, 3995, 955, 473, 11.9], ["HUJ250905-3-HUJ", 7, 3556, 963, 328, 9.2], ["HUJ20240802", 14, 2655, 420, 638, 24.1], ["4\u5408+\u6df7\u5408\u9c7c\u6cb9*3+\u8d602\u74f6\u9541", 1, 2397, 628, 252, 10.5], ["HUJ24082804-6-H", 2, 2298, 616, 231, 10.1], ["HUJ20240730-6-H", 2, 1898, 417, 265, 14.0], ["HUJ20240730", 9, 1701, 263, 323, 19.0], ["HUJ25032001", 3, 1319, 174, 833, 63.2]], "daren_sales_pie": [["\u5362\u535a\u58eb(\u76f4\u64ad\u53f7)", 20175], ["\u706b\u706b\u5168\u7f51\u6d4b\u9c7c\u6cb9", 10815], ["\u706b\u706b\u5168\u7f51\u6d4b\u809d\u7247", 2306], ["\u5927\u840c\u535a\u58eb", 1506], ["\u5927\u68ee\u6d4b\u8bc4", 1457], ["\u9c7c\u6cb9\u541b\u8bdd\u5065\u5eb7", 799], ["\u738b\u5fb7\u53d1\u8d28\u68c0\u5458\u7684\u5c0f\u53f7", 697], ["\u94ae\u795c\u7984\u00b7\u5c0f\u5c0f\u603b", 688], ["\u5f13\u8001\u5e08", 640], ["\u738b\u5fb7\u53d1\u8d28\u68c0\u5458", 378], ["\u94a2\u7259\u5ed6\u535a\u58eb", 374], ["\u68e3\u68e3\u804a\u6297\u8870", 371], ["\u8425\u517b\u5e08\u601d\u529b-\u8bf4\u9c7c\u6cb9", 299], ["\u8001\u5f90\u8425\u517b\u54c1\u6d4b\u8bc4-\u7cbe\u51c6\u8425\u517b", 199], ["\u827e\u7c73\u6297\u88701\u5bf91\u54a8\u8be2\u53f7", 199], ["cc\u6865\u672c\u65e5\u8bb0", 126]]}, "2026-04-2": {"gmv": 94825, "refund": 0, "sales": 94825, "profit": 13156, "profit_rate": 13.87, "valid_orders": 187, "total_orders": 187, "closed_orders": 0, "refund_rate": 0.0, "cost": {"commission": 44825, "product": 22897, "tariff": 7909, "platform": 3793, "express": 2244}, "daren_top10": [["\u5362\u535a\u58eb(\u76f4\u64ad\u53f7)", 100, 46011, 5356, 11.6], ["\u706b\u706b\u5168\u7f51\u6d4b\u9c7c\u6cb9", 33, 23969, 2400, 10.0], ["\u706b\u706b\u5168\u7f51\u6d4b\u809d\u7247", 9, 6331, 671, 10.6], ["\u738b\u5fb7\u53d1\u8d28\u68c0\u5458", 11, 3971, 528, 13.3], ["\u5927\u840c\u535a\u58eb", 7, 3759, 437, 11.6], ["\u5927\u68ee\u6d4b\u8bc4", 2, 1457, 199, 13.7], ["\u94ae\u795c\u7984\u00b7\u5c0f\u5c0f\u603b", 4, 1052, 232, 22.1], ["\u9c7c\u6cb9\u541b\u8bdd\u5065\u5eb7", 1, 799, 77, 9.7], ["\u738b\u5fb7\u53d1\u8d28\u68c0\u5458\u7684\u5c0f\u53f7", 2, 697, 61, 8.9], ["\u5f13\u8001\u5e08", 3, 640, 71, 11.1]], "product_top10": [["HUJ25032001-3-H", 28, 21072, 5823, 1946, 9.2], ["4\u5408+\u6df7\u5408\u9c7c\u6cb9", 15, 11985, 2865, 1498, 12.5], ["HUJ24082804", 42, 8756, 1947, 1080, 12.3], ["HUJ25032001-5-H", 7, 8183, 2268, 695, 8.5], ["HUJ250905-3-HUJ", 15, 7620, 2063, 697, 9.2], ["4\u5408+\u6df7\u5408\u9c7c\u6cb9*3+\u8d602\u74f6\u9541", 3, 7191, 1884, 757, 10.5], ["HUJ24082804-6-H", 3, 3447, 924, 339, 9.9], ["HUJ20240802", 18, 3383, 540, 801, 23.7], ["HUJ20240802-6-H", 2, 3062, 452, 1758, 57.4], ["HUJ250905", 13, 2646, 469, 477, 18.0]], "daren_sales_pie": [["\u5362\u535a\u58eb(\u76f4\u64ad\u53f7)", 46011], ["\u706b\u706b\u5168\u7f51\u6d4b\u9c7c\u6cb9", 23969], ["\u706b\u706b\u5168\u7f51\u6d4b\u809d\u7247", 6331], ["\u738b\u5fb7\u53d1\u8d28\u68c0\u5458", 3971], ["\u5927\u840c\u535a\u58eb", 3759], ["\u5927\u68ee\u6d4b\u8bc4", 1457], ["\u94ae\u795c\u7984\u00b7\u5c0f\u5c0f\u603b", 1052], ["\u9c7c\u6cb9\u541b\u8bdd\u5065\u5eb7", 799], ["\u738b\u5fb7\u53d1\u8d28\u68c0\u5458\u7684\u5c0f\u53f7", 697], ["\u5f13\u8001\u5e08", 640], ["\u6770\u745eGong", 598], ["\u94a2\u7259\u5ed6\u535a\u58eb", 507], ["\u6ce8\u518c\u8425\u517b\u5e08\u5b5f\u5e38", 398], ["\u68e3\u68e3\u804a\u6297\u8870", 371], ["\u8425\u517b\u5e08\u601d\u529b-\u8bf4\u9c7c\u6cb9", 299], ["\u8001\u5f90\u8425\u517b\u54c1\u6d4b\u8bc4-\u7cbe\u51c6\u8425\u517b", 199], ["\u827e\u7c73\u6297\u88701\u5bf91\u54a8\u8be2\u53f7", 199], ["cc\u6865\u672c\u65e5\u8bb0", 126]]}}[date];
+            const data = allData[date];
             if (!data || !data.daren_sales_pie) return;
             
             const pieData = data.daren_sales_pie.slice(0, 8);
-            new Chart(ctx, {
+            new Chart(ctx, {{
                 type: 'doughnut',
-                data: {
+                data: {{
                     labels: pieData.map(i => i[0].substring(0, 10)),
-                    datasets: [{
-                        data: pieData.map(i => i[1]),
-                        backgroundColor: pieColors.slice(0, pieData.length),
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'right',
-                            labels: { color: '#94a3b8', padding: 10, font: { size: 11 } }
-                        }
-                    },
-                    cutout: '50%'
-                }
-            });
-        }
+                    datasets: [{{ data: pieData.map(i => i[1]), backgroundColor: pieColors.slice(0, pieData.length), borderWidth: 0 }}
+                }},
+                options: {{ responsive: true, maintainAspectRatio: false, plugins: {{ legend: {{ position: 'right', labels: {{ color: '#94a3b8', padding: 10, font: {{ size: 11 }} }} }}, cutout: '50%' }}
+            }});
+        }}
         
-        // 页面加载后初始化
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {{
             initPie('2026-04-1');
             initPie('2026-04-2');
-        });
+        }});
     </script>
 </body>
 </html>
